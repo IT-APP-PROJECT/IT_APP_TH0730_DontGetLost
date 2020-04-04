@@ -8,6 +8,24 @@
           "build/netstandard1.0/coverlet.collector.targets": {}
         }
       },
+      "CSharpFunctionalExtensions/2.5.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/CSharpFunctionalExtensions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/CSharpFunctionalExtensions.dll": {}
+        }
+      },
+      "LiteDB/5.0.5": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/LiteDB.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/LiteDB.dll": {}
+        }
+      },
       "Microsoft.CodeCoverage/16.2.0": {
         "type": "package",
         "compile": {
@@ -2029,6 +2047,23 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
         }
+      },
+      "DontGetLost/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "CSharpFunctionalExtensions": "2.5.0",
+          "LiteDB": "5.0.5"
+        },
+        "compile": {
+          "bin/placeholder/DontGetLost.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DontGetLost.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       }
     }
   },
@@ -2062,6 +2097,46 @@
         "build/netstandard1.0/coverlet.core.pdb",
         "coverlet.collector.1.2.0.nupkg.sha512",
         "coverlet.collector.nuspec"
+      ]
+    },
+    "CSharpFunctionalExtensions/2.5.0": {
+      "sha512": "HrXlXqtxgiQhrJs2VIXs4Zg6zK1HKedRZ0QT85FEmWaD0jMiYXNDf/7MHzSUZ7MLiPuOT5Ax1KQpWo9NEF5OzQ==",
+      "type": "package",
+      "path": "csharpfunctionalextensions/2.5.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "csharpfunctionalextensions.2.5.0.nupkg.sha512",
+        "csharpfunctionalextensions.nuspec",
+        "lib/net45/CSharpFunctionalExtensions.dll",
+        "lib/net45/CSharpFunctionalExtensions.pdb",
+        "lib/net45/CSharpFunctionalExtensions.xml",
+        "lib/net461/CSharpFunctionalExtensions.dll",
+        "lib/net461/CSharpFunctionalExtensions.pdb",
+        "lib/net461/CSharpFunctionalExtensions.xml",
+        "lib/netstandard2.0/CSharpFunctionalExtensions.dll",
+        "lib/netstandard2.0/CSharpFunctionalExtensions.pdb",
+        "lib/netstandard2.0/CSharpFunctionalExtensions.xml"
+      ]
+    },
+    "LiteDB/5.0.5": {
+      "sha512": "R2d0SzfD787wH1dfSDdbGZETFW7osC330oowKDUvDujB2Hh8DgMpDNFJYARvXO7ikperYKkrQ2XBiEooZlAUxQ==",
+      "type": "package",
+      "path": "litedb/5.0.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "AppVeyorSettings.json",
+        "LICENSE",
+        "icon_64x64.png",
+        "lib/net45/LiteDB.dll",
+        "lib/net45/LiteDB.xml",
+        "lib/netstandard1.3/LiteDB.dll",
+        "lib/netstandard1.3/LiteDB.xml",
+        "lib/netstandard2.0/LiteDB.dll",
+        "lib/netstandard2.0/LiteDB.xml",
+        "litedb.5.0.5.nupkg.sha512",
+        "litedb.nuspec"
       ]
     },
     "Microsoft.CodeCoverage/16.2.0": {
@@ -6868,10 +6943,16 @@
         "system.xml.xpath.xmldocument.4.0.1.nupkg.sha512",
         "system.xml.xpath.xmldocument.nuspec"
       ]
+    },
+    "DontGetLost/1.0.0": {
+      "type": "project",
+      "path": "../DontGetLost/DontGetLost.csproj",
+      "msbuildProject": "../DontGetLost/DontGetLost.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "DontGetLost >= 1.0.0",
       "MSTest.TestAdapter >= 2.0.0",
       "MSTest.TestFramework >= 2.0.0",
       "Microsoft.NET.Test.Sdk >= 16.2.0",
@@ -6903,7 +6984,11 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Vithar\\source\\repos\\IT_APP\\DontGetLost\\DontGetLost.csproj": {
+              "projectPath": "C:\\Users\\Vithar\\source\\repos\\IT_APP\\DontGetLost\\DontGetLost.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -6943,6 +7028,9 @@
         "assetTargetFallback": true,
         "warn": true,
         "frameworkReferences": {
+          "Microsoft.AspNetCore.App": {
+            "privateAssets": "none"
+          },
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }

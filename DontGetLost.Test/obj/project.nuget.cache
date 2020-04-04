@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "x02/IDSxhXic3Dq7L3JtlpCxMKaw5OT6KoRx7oBbwqFGDXvdQ/+TSbmU2xpzsN7b+oy3mN2FK0LNT1PGehCCfQ==",
+  "dgSpecHash": "VjvgOE1PQRWjYHsnoEbL9DUlwmuDfeQt4XTpmqw2GLdq6zrlp+1QdXwliD8kB/nHOAMhHPgJ09lRWTE3ai/89w==",
   "success": true,
   "projectFilePath": "C:\\Users\\Vithar\\source\\repos\\IT_APP\\DontGetLost.Test\\DontGetLost.Test.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Vithar\\.nuget\\packages\\coverlet.collector\\1.2.0\\coverlet.collector.1.2.0.nupkg.sha512",
+    "C:\\Users\\Vithar\\.nuget\\packages\\csharpfunctionalextensions\\2.5.0\\csharpfunctionalextensions.2.5.0.nupkg.sha512",
+    "C:\\Users\\Vithar\\.nuget\\packages\\litedb\\5.0.5\\litedb.5.0.5.nupkg.sha512",
     "C:\\Users\\Vithar\\.nuget\\packages\\microsoft.codecoverage\\16.2.0\\microsoft.codecoverage.16.2.0.nupkg.sha512",
     "C:\\Users\\Vithar\\.nuget\\packages\\microsoft.csharp\\4.0.1\\microsoft.csharp.4.0.1.nupkg.sha512",
     "C:\\Users\\Vithar\\.nuget\\packages\\microsoft.net.test.sdk\\16.2.0\\microsoft.net.test.sdk.16.2.0.nupkg.sha512",
