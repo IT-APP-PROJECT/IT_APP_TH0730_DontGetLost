@@ -1,0 +1,87 @@
+@import "../sass/mixins";
+
+.app-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.sidenav{
+  width: 450px;
+  background-color: rgba($color:black, $alpha: 0.5);
+  border: none;
+  @include sm {
+    width: 100%;
+  }
+  @include md {
+    width: 50%;
+  }
+}
+
+.icon-container {
+  padding: 20px;
+}
+
+.map-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.map-frame {
+  height: 100%;
+}
+
+#map {
+  height: 100%;
+}
+
+.icon-bg {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 5px;
+  border-radius: 4px;
+  background-color: rgba($color:black, $alpha: 0.5);
+  z-index: 999;
+}
+
+.toggle-menu-btn {
+  color: orange;
+  cursor: pointer;
+}
+
+.mat-list {
+    display: block;
+    position: absolute;
+    top: 40%;
+    left: 20px;
+    padding: 5px;
+    background-color: rgba($color:black, $alpha: 0.5);
+    border-radius: 5px;
+    z-index: 999;
+}
+
+.floor-btn {
+    color: orange;
+    min-width: 50px;
+    &:hover {
+        background-color: rgba($color:orange, $alpha: 0.1);
+    }
+}
+
+:host ::ng-deep{
+    .mat-drawer-inner-container {
+        display: flex;
+    }
+
+    .mat-list-item-content {
+        padding: 0!important;
+    }
+
+}
+

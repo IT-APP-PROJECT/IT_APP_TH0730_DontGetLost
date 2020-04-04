@@ -1,0 +1,34 @@
+<mat-sidenav-container class="app-container">
+  <mat-sidenav class="sidenav" #sidenav mode="over" position="end">
+    <div class="icon-container">
+      <mat-icon class="toggle-menu-btn" 
+                (click)="toggleMenu()">
+        arrow_forward
+      </mat-icon>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="map-container">
+        <mat-list>
+            <mat-list-item *ngFor="let floor of Floors"> 
+                <button mat-button class="floor-btn" (click)="toggleFloorLayer(floor)">
+                    {{floor}}
+                </button> 
+            </mat-list-item>
+        </mat-list>
+      <div class="icon-bg">
+        <mat-icon *ngIf="!IsMenuOpened" 
+                class="toggle-menu-btn" 
+                (click)="toggleMenu()">
+          arrow_back
+        </mat-icon>
+      </div>
+      <div class="map-frame">
+        <div id="map"></div>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<router-outlet></router-outlet>
