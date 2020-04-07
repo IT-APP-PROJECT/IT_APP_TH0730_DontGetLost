@@ -1,17 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 namespace DontGetLost.Models
 {
     public class Icon
     {
-        public Point Point { get; }
+        public MapPoint Point { get; }
+        public IconType Type { get; }
+        public int MapId { get; set; }
 
-        public Icon(Point point)
+        public Icon(MapPoint point, IconType type, int mapId)
         {
-            Point = point; 
+            Point = point;
+            Type = type;
+            MapId = mapId; 
         }
+    }
+
+    public enum IconType
+    {
+        Elevator, 
+        Vendor,
+        Cloakroom
     }
 }

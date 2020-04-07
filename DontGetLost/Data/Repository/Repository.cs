@@ -16,8 +16,7 @@ namespace DontGetLost.Repository
             m_database = database;
         }
 
-        public Result<IEnumerable<T>> FindAll()
-            => Guard(Collection.FindAll);
+        public Result<IEnumerable<T>> FindAll() => Guard(Collection.FindAll);
 
         public Result<IEnumerable<T>> FindAllWhere(BsonExpression predicate)
             => Guard(() => Collection.Find(predicate));
