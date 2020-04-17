@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using CSharpFunctionalExtensions;
+using DontGetLost.Dtos;
 using DontGetLost.Models;
 using DontGetLost.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -22,14 +25,37 @@ namespace DontGetLost.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Icon>> GetIconsForMap(int mapId)
-        { 
-            var icons = m_iconService.GetIconsForMap(mapId);
+        [Route("icons")]
+        public ActionResult<IEnumerable<Icon>> GetIcons(int mapId)
+        {
+            var icons = m_iconService.GetIcons(mapId);
 
-            if (icons.IsFailure) return NotFound();
+            if (icons.IsFailure) return BadRequest();
+            if (icons.Value.Count() == 0) return NoContent();
 
             return Ok(icons.Value);
         }
 
+        [HttpPost]
+        [Route("icons")]
+        public ActionResult AddIcon(IconDto dto)
+        {
+            var result = m_iconService.AddIcon(dto);
+
+            if (result.IsFailure) return BadRequest();
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("icons")]
+        public ActionResult DeleteIcon(int iconId)
+        {
+            var result = m_iconService.DeleteIcon(iconId);
+
+            if (result.IsFailure) return BadRequest();
+
+            return NoContent();
+        }
     }
 }

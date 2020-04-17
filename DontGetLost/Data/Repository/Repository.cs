@@ -9,7 +9,7 @@ namespace DontGetLost.Repository
     public sealed class Repository<T> : IRepository<T>
     {
         private readonly LiteDatabase m_database;
-        private ILiteCollection<T> Collection => m_database.GetCollection<T>();
+        private ILiteCollection<T> Collection => m_database.GetCollection<T>(nameof(T));
 
         public Repository(LiteDatabase database)
         {
@@ -21,8 +21,8 @@ namespace DontGetLost.Repository
         public Result<IEnumerable<T>> FindAllWhere(BsonExpression predicate)
             => Guard(() => Collection.Find(predicate));
 
-        public Result<int> Create(T entity)
-            => Guard(() => Collection.Insert(entity).AsInt32);
+        public Result<BsonValue> Create(T entity)
+            => Guard(() => Collection.Insert(entity));
 
         public Result<bool> Update(T entity)
             => Guard(() => Collection.Update(entity));
