@@ -28,9 +28,11 @@ namespace DontGetLost
         {
             services.AddSingleton(new LiteDatabase(@"Data\Database.db"));
             services.AddSingleton<IRepository<Icon>, Repository<Icon>>();
-            services.AddSingleton<IRepository<CloudinaryData>, Repository<CloudinaryData>>();
+            services.AddSingleton<IRepository<Image>, Repository<Image>>();
+            services.AddSingleton<IRepository<Room>, Repository<Room>>();
             services.AddScoped<ICloudinaryService, CloudinaryService>();
             services.AddScoped<IIconService, IconService>();
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

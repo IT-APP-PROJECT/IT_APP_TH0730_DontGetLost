@@ -23,7 +23,7 @@ namespace DontGetLost.Services
                 .Bind(icon => m_iconRepository.Create(icon));
 
         private Result<Icon> MapIconDtoToIcon(IconDto dto)
-            => Result.Success(new Icon(new Point(dto.X, dto.Y), dto.Type, dto.MapId));
+            => Result.Success(new Icon(dto.MapId, new Point(dto.X, dto.Y), dto.Type));
 
         public Result DeleteIcon(int iconId)
             => m_iconRepository.Delete(iconId);

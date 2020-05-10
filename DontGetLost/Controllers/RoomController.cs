@@ -9,14 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DontGetLost.Controllers
 {
-    public class IconController : Controller
+    public class RoomController : Controller
     {
         // GET: /<controller>/
-        private readonly IIconService m_iconService;
+        private readonly IRoomService m_roomService;
 
-        public IconController(IIconService iconService)
+        public RoomController(IRoomService roomService)
         {
-            m_iconService = iconService;
+            m_roomService = roomService;
         }
         public IActionResult Index()
         {
@@ -24,22 +24,22 @@ namespace DontGetLost.Controllers
         }
 
         [HttpGet]
-        [Route("icons")]
-        public ActionResult<IEnumerable<Icon>> GetIcons(int mapId)
+        [Route("rooms")]
+        public ActionResult<IEnumerable<Room>> GetRooms(int mapId)
         {
-            var icons = m_iconService.GetIcons(mapId);
+            var rooms = m_roomService.GetRooms(mapId);
 
-            if (icons.IsFailure) return BadRequest();
-            if (icons.Value.Count() == 0) return NoContent();
+            if (rooms.IsFailure) return BadRequest();
+            if (rooms.Value.Count() == 0) return NoContent();
 
-            return Ok(icons.Value);
+            return Ok(rooms.Value);
         }
 
         [HttpPost]
-        [Route("icons")]
-        public ActionResult AddIcon(IconDto dto)
+        [Route("rooms")]
+        public ActionResult AddRoom(RoomDto dto)
         {
-            var result = m_iconService.AddIcon(dto);
+            var result = m_roomService.AddRoom(dto);
 
             if (result.IsFailure) return BadRequest();
 
@@ -47,10 +47,10 @@ namespace DontGetLost.Controllers
         }
 
         [HttpDelete]
-        [Route("icons")]
-        public ActionResult DeleteIcon(int iconId)
+        [Route("rooms")]
+        public ActionResult DeleteRoom(int roomId)
         {
-            var result = m_iconService.DeleteIcon(iconId);
+            var result = m_roomService.DeleteRoom(roomId);
 
             if (result.IsFailure) return BadRequest();
 

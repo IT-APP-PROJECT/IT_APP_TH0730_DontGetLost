@@ -9,7 +9,7 @@ namespace DontGetLost.Services
 {
     public interface ICloudinaryService
     {
-        public CloudinaryData uploadImage(string imageName, string imagePath);
-        public IEnumerable<CloudinaryData> getImage(string imageName);
+        public Image uploadImage(string imageName, string imagePath);
+        public IEnumerable<Image> getImage(string imageName);
     }
 }
