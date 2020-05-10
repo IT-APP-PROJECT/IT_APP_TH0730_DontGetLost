@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using System.Linq;
+using CSharpFunctionalExtensions;
 
 namespace DontGetLost.Services
 {
@@ -41,13 +43,23 @@ namespace DontGetLost.Services
             return newImage;
 
         }
-        public IEnumerable<Image> getImage(string imageName)
+        public Result<Image> getImage(string imageName)
         {
             var result = m_cloudinaryRepository.FindAll();
             if (result.IsSuccess)
-                return result.Value;
-            else
-                return new List<Image>();
+            {
+                var image = result.Value.FirstOrDefault(x => x.Name == imageName);
+                if (image == null)
+                {
+                    Result.Failure<Image>("error");
+                }
+                else
+                {
+                    return Result.Success(image);
+                }
+            }
+
+            return Result.Failure<Image>("error");
         }
 
 

@@ -41,13 +41,16 @@ namespace DontGetLost.Controllers
         public ActionResult<Image> Download(string name)
         {
             var result = _cloudinary.getImage(name);
-            if (result.Count() == 0)
+            if (result.IsSuccess)
             {
-                _logger.LogError("image fetch has failed");
+                return Ok(result.Value);
+            }
+            else
+            {
+                _logger.LogError(result.Error);
                 return BadRequest();
             }
 
-            return Ok(result);
         }
     }
 }
