@@ -1,4 +1,5 @@
-﻿using DontGetLost.Contracts;
+﻿using CSharpFunctionalExtensions;
+using DontGetLost.Contracts;
 using DontGetLost.Models;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace DontGetLost.Services
     public interface ICloudinaryService
     {
         public Image uploadImage(string imageName, string imagePath);
-        public IEnumerable<Image> getImage(string imageName);
+        public Result<Image> getImage(string imageName);
     }
 }
