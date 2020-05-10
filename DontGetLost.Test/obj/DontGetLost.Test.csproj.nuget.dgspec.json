@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lukas\\dontgetlost\\IT_APP_TH0730_DontGetLost\\DontGetLost.Test\\DontGetLost.Test.csproj": {}
+    "C:\\Users\\Vithar\\source\\repos\\IT_APP\\DontGetLost.Test\\DontGetLost.Test.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lukas\\dontgetlost\\IT_APP_TH0730_DontGetLost\\DontGetLost.Test\\DontGetLost.Test.csproj": {
+    "C:\\Users\\Vithar\\source\\repos\\IT_APP\\DontGetLost.Test\\DontGetLost.Test.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lukas\\dontgetlost\\IT_APP_TH0730_DontGetLost\\DontGetLost.Test\\DontGetLost.Test.csproj",
+        "projectUniqueName": "C:\\Users\\Vithar\\source\\repos\\IT_APP\\DontGetLost.Test\\DontGetLost.Test.csproj",
         "projectName": "DontGetLost.Test",
-        "projectPath": "C:\\Users\\Lukas\\dontgetlost\\IT_APP_TH0730_DontGetLost\\DontGetLost.Test\\DontGetLost.Test.csproj",
-        "packagesPath": "C:\\Users\\Lukas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lukas\\dontgetlost\\IT_APP_TH0730_DontGetLost\\DontGetLost.Test\\obj\\",
+        "projectPath": "C:\\Users\\Vithar\\source\\repos\\IT_APP\\DontGetLost.Test\\DontGetLost.Test.csproj",
+        "packagesPath": "C:\\Users\\Vithar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Vithar\\source\\repos\\IT_APP\\DontGetLost.Test\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Lukas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Vithar\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -30,8 +27,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\Lukas\\dontgetlost\\IT_APP_TH0730_DontGetLost\\DontGetLost\\DontGetLost.csproj": {
-                "projectPath": "C:\\Users\\Lukas\\dontgetlost\\IT_APP_TH0730_DontGetLost\\DontGetLost\\DontGetLost.csproj"
+              "C:\\Users\\Vithar\\source\\repos\\IT_APP\\DontGetLost\\DontGetLost.csproj": {
+                "projectPath": "C:\\Users\\Vithar\\source\\repos\\IT_APP\\DontGetLost\\DontGetLost.csproj"
               }
             }
           }
@@ -84,24 +81,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Lukas\\dontgetlost\\IT_APP_TH0730_DontGetLost\\DontGetLost\\DontGetLost.csproj": {
+    "C:\\Users\\Vithar\\source\\repos\\IT_APP\\DontGetLost\\DontGetLost.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lukas\\dontgetlost\\IT_APP_TH0730_DontGetLost\\DontGetLost\\DontGetLost.csproj",
+        "projectUniqueName": "C:\\Users\\Vithar\\source\\repos\\IT_APP\\DontGetLost\\DontGetLost.csproj",
         "projectName": "DontGetLost",
-        "projectPath": "C:\\Users\\Lukas\\dontgetlost\\IT_APP_TH0730_DontGetLost\\DontGetLost\\DontGetLost.csproj",
-        "packagesPath": "C:\\Users\\Lukas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lukas\\dontgetlost\\IT_APP_TH0730_DontGetLost\\DontGetLost\\obj\\",
+        "projectPath": "C:\\Users\\Vithar\\source\\repos\\IT_APP\\DontGetLost\\DontGetLost.csproj",
+        "packagesPath": "C:\\Users\\Vithar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Vithar\\source\\repos\\IT_APP\\DontGetLost\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Lukas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Vithar\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -160,7 +154,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
         }
       }
     }
