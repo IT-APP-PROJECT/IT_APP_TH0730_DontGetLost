@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using DontGetLost.Services;
 
 namespace DontGetLost.Controllers
 {

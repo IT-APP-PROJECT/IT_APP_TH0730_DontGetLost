@@ -1,6 +1,7 @@
 using DontGetLost.Contracts;
 using DontGetLost.Models;
 using DontGetLost.Repository;
+using DontGetLost.Services;
 using LiteDB;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,6 +25,9 @@ namespace DontGetLost
         {
             services.AddSingleton(new LiteDatabase(@"Data\Database.db"));
             services.AddSingleton<IRepository<Icon>, Repository<Icon>>();
+            services.AddSingleton<IRepository<CloudinaryData>, Repository<CloudinaryData>>();
+            services.AddScoped<ICloudinaryService, CloudinaryService>();
+            services.AddScoped<IIconService, IconService>();
             services.AddControllers();
         }
 
