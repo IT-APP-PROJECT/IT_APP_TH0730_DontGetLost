@@ -2,8 +2,6 @@
 using DontGetLost.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
@@ -12,7 +10,7 @@ namespace DontGetLost.Services
 {
     public class CloudinaryService : ICloudinaryService
     {
-        private readonly IRepository<CloudinaryData> m_cloudinaryRepository;
+        private readonly IRepository<Image> m_cloudinaryRepository;
 
 
         private readonly Account account = new Account(
@@ -23,13 +21,13 @@ namespace DontGetLost.Services
 
         private Cloudinary cloudinary;
 
-        public CloudinaryService(IRepository<CloudinaryData> cloudRepository)
+        public CloudinaryService(IRepository<Image> cloudRepository)
         {
             m_cloudinaryRepository = cloudRepository;
             cloudinary = new Cloudinary(account);
         }
 
-        public CloudinaryData uploadImage(string imageName, string imagePath)
+        public Image uploadImage(string imageName, string imagePath)
         {
             var uploadParams = new ImageUploadParams()
             {
@@ -37,19 +35,19 @@ namespace DontGetLost.Services
             };
             var uploadResult = cloudinary.Upload(uploadParams);
 
-            var newImage = new CloudinaryData(imageName, uploadResult.Uri);
+            var newImage = new Image(imageName, uploadResult.Uri);
             m_cloudinaryRepository.Create(newImage);
 
             return newImage;
 
         }
-        public IEnumerable<CloudinaryData> getImage(string imageName)
+        public IEnumerable<Image> getImage(string imageName)
         {
-            var restult = m_cloudinaryRepository.FindAll();
-            if (restult.IsSuccess)
-                return restult.Value;
+            var result = m_cloudinaryRepository.FindAll();
+            if (result.IsSuccess)
+                return result.Value;
             else
-                return new List<CloudinaryData>();
+                return new List<Image>();
         }
 
 

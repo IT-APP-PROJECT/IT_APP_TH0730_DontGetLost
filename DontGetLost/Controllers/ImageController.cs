@@ -28,19 +28,19 @@ namespace DontGetLost.Controllers
         }
 
         [HttpPost]
-        [Route("Image/Upload")]
-        public ActionResult<CloudinaryData> Upload(string name, string path)
+        [Route("images")]
+        public ActionResult<Image> Upload(string name, string path)
         {
             var clouadinaryData = _cloudinary.uploadImage(name, path);
-            _logger.LogInformation(clouadinaryData.ImageName + " : " + clouadinaryData.Url);
+            _logger.LogInformation(clouadinaryData.Name + " : " + clouadinaryData.Url);
 
             return Ok(clouadinaryData);
         }
         [HttpGet]
-        [Route("Image/Download")]
-        public ActionResult<CloudinaryData> Download(string imageName)
+        [Route("images")]
+        public ActionResult<Image> Download(string name)
         {
-            var result = _cloudinary.getImage(imageName);
+            var result = _cloudinary.getImage(name);
             if (result.Count() == 0)
             {
                 _logger.LogError("image fetch has failed");
