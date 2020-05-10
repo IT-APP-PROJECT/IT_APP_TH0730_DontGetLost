@@ -8,9 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Web.Http;
 using Microsoft.OpenApi.Models;
-using DontGetLost.Services;
 
 namespace DontGetLost
 {
@@ -30,9 +28,12 @@ namespace DontGetLost
             services.AddSingleton<IRepository<Icon>, Repository<Icon>>();
             services.AddSingleton<IRepository<Image>, Repository<Image>>();
             services.AddSingleton<IRepository<Room>, Repository<Room>>();
+            services.AddSingleton<IRepository<GeoJsonMap>, Repository<GeoJsonMap>>();
             services.AddScoped<ICloudinaryService, CloudinaryService>();
             services.AddScoped<IIconService, IconService>();
-            
+            services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IGeoJsonMapService, GeoJsonMapService>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
