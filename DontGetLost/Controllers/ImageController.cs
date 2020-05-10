@@ -27,7 +27,7 @@ namespace DontGetLost.Controllers
             return View();
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("Image/Upload")]
         public ActionResult<CloudinaryData> Upload(string name, string path)
         {
@@ -36,6 +36,7 @@ namespace DontGetLost.Controllers
 
             return Ok(clouadinaryData);
         }
+        [HttpGet]
         [Route("Image/Download")]
         public ActionResult<CloudinaryData> Download(string imageName)
         {
