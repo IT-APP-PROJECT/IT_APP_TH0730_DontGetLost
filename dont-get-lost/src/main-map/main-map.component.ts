@@ -10,6 +10,8 @@ import { Map } from './../view-models/MapVM';
 import { Room } from './../view-models/RoomVM';
 import { Icon, IconType } from './../view-models/IconVM';
 import { Floor } from './../view-models/FloorVM';
+import { OverlayService } from './../services/overlay.service';
+import { OverlayComponentRef } from './../overlay/overlay-component-ref';
 
 export enum ActiveMapType {
     Geo,
@@ -45,6 +47,7 @@ export class MainMapComponent {
     CurrentMap: Map;
     CurrentMapRooms: Room[];
     ActiveMapType: ActiveMapType;
+    OverlayRef: OverlayComponentRef;
 
     get IsNonGeoMapActive(): boolean {
         return this.ActiveMapType && this.ActiveMapType === ActiveMapType.NonGeo;
@@ -54,7 +57,7 @@ export class MainMapComponent {
     @ViewChild(MatSidenav)
     Menu: MatSidenav;
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor(private formBuilder: FormBuilder, private overlayService: OverlayService) {
         this.NavigationFormFroup = this.formBuilder.group({
             InitialRoomFormControl: new FormControl(''),
             FinalRoomFormControl: new FormControl(''),
@@ -92,7 +95,7 @@ export class MainMapComponent {
     }
 
     toggleFloorLayer(floorNumber: number): void {
-        this.IsRequesting = true;
+        this.toggleOverlay();
     }
 
     toggleNavigation(): void {
@@ -167,6 +170,11 @@ export class MainMapComponent {
 
     stringHasValue(str: string): boolean {
         return !!str && str.trim().length !== 0;
+    }
+
+    toggleOverlay(): void {
+        this.OverlayRef = this.overlayService.open();
+        setTimeout(() => {this.OverlayRef.close()}, 5000);
     }
 
     private setGeoMap(): void {

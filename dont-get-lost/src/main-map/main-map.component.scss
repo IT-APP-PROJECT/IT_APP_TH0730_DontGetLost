@@ -111,13 +111,6 @@
   background: white !important;
 }
 
-mat-progress-spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 999;
-}
-
 :host ::ng-deep{
     .mat-drawer-inner-container {
       display: flex;

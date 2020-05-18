@@ -1,21 +1,21 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MainMapComponent } from './main-map.component';
+import { OverlayComponent } from './overlay.component';
 
-describe('MainMapComponent', () => {
+describe('OverlayComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
                 RouterTestingModule
             ],
             declarations: [
-                MainMapComponent
+                OverlayComponent
             ],
         }).compileComponents();
     }));
 
     it('should create the app', () => {
-        const fixture = TestBed.createComponent(MainMapComponent);
+        const fixture = TestBed.createComponent(OverlayComponent);
         const app = fixture.debugElement.componentInstance;
         expect(app).toBeTruthy();
     });

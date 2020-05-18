@@ -3,3 +3,7 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.cdk-overlay-container {
+    background-color: rgba($color:black, $alpha: 0.9);
+  }

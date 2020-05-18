@@ -15,10 +15,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { OverlayService } from '../services/overlay.service';
+import { OverlayComponent } from '../overlay/overlay.component';
 
 @NgModule({
     declarations: [
         MainMapComponent,
+        OverlayComponent,
     ],
     imports: [
         BrowserModule,
@@ -35,10 +38,16 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         ReactiveFormsModule,
         MatSelectModule,
         MatProgressSpinnerModule,
+        OverlayModule,
     ],
-    providers: [],
+    providers: [
+        OverlayService,
+    ],
     bootstrap: [
         MainMapComponent,
+    ],
+    entryComponents: [
+        OverlayComponent,
     ],
 })
 export class AppModule { }
