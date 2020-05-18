@@ -1,16 +1,57 @@
 <mat-sidenav-container class="app-container">
   <mat-sidenav class="sidenav" #sidenav mode="over" position="end">
-    <div class="icon-container">
-      <mat-icon class="toggle-menu-btn" 
-                (click)="toggleMenu()">
-        arrow_forward
-      </mat-icon>
+    <div class="sidenav-content">
+      <div class="icon-container">
+        <mat-icon class="toggle-menu-btn" 
+                  (click)="toggleMenu()">
+          arrow_forward
+        </mat-icon>
+      </div>
+      <div class="input-wrapper" [formGroup]="NavigationFormFroup">
+        <div class="controls-row">
+          <mat-form-field>
+            <mat-label>Wybierz budynek</mat-label>
+            <mat-select [(value)]="InitialBuilding">
+              <mat-option *ngFor="let building of AvailableBuildings" [value]="building">
+                {{building}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Wprowadź salę początkową</mat-label>
+            <input matInput type="text" formControlName="InitialRoomFormControl">
+            <button mat-button *ngIf="ClearInitialRoomBtnVisibility" matSuffix mat-icon-button aria-label="Wyczyść" (click)="clearInitialRoom()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <div class="controls-row">
+          <mat-form-field>
+            <mat-label>Wybierz budynek</mat-label>
+            <mat-select [(value)]="FinalBuilding">
+              <mat-option *ngFor="let building of AvailableBuildings" [value]="building">
+                {{building}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Wprowadź salę końcową</mat-label>
+            <input matInput type="text" formControlName="FinalRoomFormControl">
+            <button mat-button *ngIf="ClearFinalRoomBtnVisibility" matSuffix mat-icon-button aria-label="Wyczyść" (click)="clearFinalRoom()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <button mat-button class="navigate-btn" (click)="toggleNavigation()">
+          Rozpocznij nawigację
+        </button>  
+      </div>
     </div>
   </mat-sidenav>
 
   <mat-sidenav-content>
     <div class="map-container">
-        <mat-list>
+        <mat-list *ngIf="IsNonGeoMapActive">
             <mat-list-item *ngFor="let floor of Floors"> 
                 <button mat-button class="floor-btn" (click)="toggleFloorLayer(floor)">
                     {{floor}}
@@ -30,5 +71,7 @@
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<mat-progress-spinner *ngIf="true" mode="indeterminate"></mat-progress-spinner>
 
 <router-outlet></router-outlet>
