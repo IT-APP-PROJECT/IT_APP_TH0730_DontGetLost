@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace DontGetLost.Services
 {
-    public class RoomService: IRoomService
+    public class RoomService : IRoomService
     {
         private readonly IRepository<Room> m_roomRepository;
 
@@ -19,17 +19,17 @@ namespace DontGetLost.Services
 
         public Result AddRoom(RoomDto dto)
             => MapRoomDtoToRoom(dto)
-                .Bind(icon => m_roomRepository.Create(icon));
+                .Bind(room => m_roomRepository.Create(room));
 
         private Result<Room> MapRoomDtoToRoom(RoomDto dto)
-            => Result.Success( new Room(dto.MapId, new Point(dto.X, dto.Y), dto.Description));
+            => Result.Success(new Room(dto.Name, dto.MapName, new Point(dto.X, dto.Y), dto.Description));
 
-        public Result DeleteRoom(int iconId)
-            => m_roomRepository.Delete(iconId);
+        public Result DeleteRoom(int roomId)
+            => m_roomRepository.Delete(roomId);
 
-        public Result<IEnumerable<Room>> GetRooms(int mapId)
+        public Result<IEnumerable<Room>> GetRooms(string mapName)
             => m_roomRepository
                 .FindAll()
-                .Map(x => x.Where(icon => icon.MapId == mapId));
+                .Map(x => x.Where(room => room.MapName == mapName));
     }
 }

@@ -1,45 +1,46 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using DontGetLost.Dtos;
+﻿using DontGetLost.Dtos;
 using DontGetLost.Models;
 using DontGetLost.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace DontGetLost.Controllers
 {
-    public class GeoJsonMapController : Controller
+    public class PathPointController : Controller
     {
         // GET: /<controller>/
-        private readonly IGeoJsonMapService m_geoJsonMapService;
+        private readonly IPathPointService m_pathPointService;
 
-        public GeoJsonMapController(IGeoJsonMapService geoJsonMapService)
+        public PathPointController(IPathPointService pathPointService)
         {
-            m_geoJsonMapService = geoJsonMapService;
+            m_pathPointService = pathPointService;
         }
+
         public IActionResult Index()
         {
             return View();
         }
 
         [HttpGet]
-        [Route("geoJsonMaps")]
-        public ActionResult<IEnumerable<GeoJsonMap>> GetGeoJsonMaps(int mapId)
+        [Route("pathPoints")]
+        public ActionResult<IEnumerable<PathPoint>> GetPathPoints(string mapName)
         {
-            var geoJsonMaps = m_geoJsonMapService.GetGeoJsonMaps(mapId);
+            var pathPoints = m_pathPointService.GetPathPoints(mapName);
 
-            if (geoJsonMaps.IsFailure) return BadRequest();
-            if (geoJsonMaps.Value.Count() == 0) return NoContent();
+            if (pathPoints.IsFailure) return BadRequest();
+            if (pathPoints.Value.Count() == 0) return NoContent();
 
-            return Ok(geoJsonMaps.Value);
+            return Ok(pathPoints.Value);
         }
 
         [HttpPost]
-        [Route("geoJsonMaps")]
-        public ActionResult AddGeoJsonMap(GeoJsonMapDto dto)
+        [Route("pathPoints")]
+        public ActionResult AddPathPoint(PathPointDto dto)
         {
-            var result = m_geoJsonMapService.AddGeoJsonMap(dto);
+            var result = m_pathPointService.AddPathPoint(dto);
 
             if (result.IsFailure) return BadRequest();
 
@@ -47,10 +48,10 @@ namespace DontGetLost.Controllers
         }
 
         [HttpDelete]
-        [Route("geoJsonMaps")]
-        public ActionResult DeleteGeoJsonMap(int geoJsonMapId)
+        [Route("pathPoints")]
+        public ActionResult DeletePathPoint(int pathPointId)
         {
-            var result = m_geoJsonMapService.DeleteGeoJsonMap(geoJsonMapId);
+            var result = m_pathPointService.DeletePathPoint(pathPointId);
 
             if (result.IsFailure) return BadRequest();
 

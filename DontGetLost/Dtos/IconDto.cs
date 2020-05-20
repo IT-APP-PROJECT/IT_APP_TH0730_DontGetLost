@@ -7,7 +7,6 @@ namespace DontGetLost.Dtos
         public int X { get; set; }
         public int Y { get; set; }
         public IconType Type { get; }
-        public int MapId { get; set; }
-
+        public string MapName { get; set; }
     }
 }

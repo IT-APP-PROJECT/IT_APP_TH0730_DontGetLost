@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using DontGetLost.Dtos;
+﻿using DontGetLost.Dtos;
 using DontGetLost.Models;
 using DontGetLost.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,6 +18,7 @@ namespace DontGetLost.Controllers
         {
             m_roomService = roomService;
         }
+
         public IActionResult Index()
         {
             return View();
@@ -25,9 +26,9 @@ namespace DontGetLost.Controllers
 
         [HttpGet]
         [Route("rooms")]
-        public ActionResult<IEnumerable<Room>> GetRooms(int mapId)
+        public ActionResult<IEnumerable<Room>> GetRooms(string mapName)
         {
-            var rooms = m_roomService.GetRooms(mapId);
+            var rooms = m_roomService.GetRooms(mapName);
 
             if (rooms.IsFailure) return BadRequest();
             if (rooms.Value.Count() == 0) return NoContent();

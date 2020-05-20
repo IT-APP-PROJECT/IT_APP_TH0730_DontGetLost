@@ -1,11 +1,12 @@
-﻿
-namespace DontGetLost.Models
+﻿namespace DontGetLost.Models
 {
-    //TODO: Add more 
+    //TODO: Add more
     public enum IconType
     {
-        Elevator, 
+        Elevator,
         Vendor,
-        Cloakroom
+        Cloakroom,
+        Toilet,
+        Stairs
     }
 }

@@ -7,8 +7,10 @@ namespace DontGetLost.Services
 {
     public interface IRoomService
     {
-        Result<IEnumerable<Room>> GetRooms(int mapId);
+        Result<IEnumerable<Room>> GetRooms(string mapName);
+
         Result DeleteRoom(int roomId);
+
         Result AddRoom(RoomDto dto);
     }
 }

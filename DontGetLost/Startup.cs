@@ -1,3 +1,4 @@
+using DontGetLost.Constants;
 using DontGetLost.Contracts;
 using DontGetLost.Models;
 using DontGetLost.Repository;
@@ -24,15 +25,15 @@ namespace DontGetLost
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(new LiteDatabase(@"Data\Database.db"));
+            services.AddSingleton(new LiteDatabase(DatabasePaths.Data));
             services.AddSingleton<IRepository<Icon>, Repository<Icon>>();
             services.AddSingleton<IRepository<Image>, Repository<Image>>();
             services.AddSingleton<IRepository<Room>, Repository<Room>>();
-            services.AddSingleton<IRepository<GeoJsonMap>, Repository<GeoJsonMap>>();
+            services.AddSingleton<IRepository<PathPoint>, Repository<PathPoint>>();
             services.AddScoped<ICloudinaryService, CloudinaryService>();
             services.AddScoped<IIconService, IconService>();
             services.AddScoped<IRoomService, RoomService>();
-            services.AddScoped<IGeoJsonMapService, GeoJsonMapService>();
+            services.AddScoped<IPathPointService, PathPointService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -63,7 +64,6 @@ namespace DontGetLost
                 c.SwaggerEndpoint("./swagger/v1/swagger.json", "My API V1");
                 c.RoutePrefix = string.Empty;
             });
-
         }
     }
 }

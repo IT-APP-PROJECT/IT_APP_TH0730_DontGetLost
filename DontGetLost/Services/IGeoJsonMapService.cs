@@ -5,10 +5,12 @@ using System.Collections.Generic;
 
 namespace DontGetLost.Services
 {
-    public interface IGeoJsonMapService
+    public interface IPathPointService
     {
-        Result<IEnumerable<GeoJsonMap>> GetGeoJsonMaps(int mapId);
-        Result DeleteGeoJsonMap(int geoJsonMapId);
-        Result AddGeoJsonMap(GeoJsonMapDto dto);
+        Result<IEnumerable<PathPoint>> GetPathPoints(string mapName);
+
+        Result DeletePathPoint(int pathPointId);
+
+        Result AddPathPoint(PathPointDto dto);
     }
 }

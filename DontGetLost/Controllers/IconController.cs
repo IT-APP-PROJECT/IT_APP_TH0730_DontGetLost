@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using DontGetLost.Dtos;
+﻿using DontGetLost.Dtos;
 using DontGetLost.Models;
 using DontGetLost.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,6 +18,7 @@ namespace DontGetLost.Controllers
         {
             m_iconService = iconService;
         }
+
         public IActionResult Index()
         {
             return View();
@@ -25,9 +26,9 @@ namespace DontGetLost.Controllers
 
         [HttpGet]
         [Route("icons")]
-        public ActionResult<IEnumerable<Icon>> GetIcons(int mapId)
+        public ActionResult<IEnumerable<Icon>> GetIcons(string mapName)
         {
-            var icons = m_iconService.GetIcons(mapId);
+            var icons = m_iconService.GetIcons(mapName);
 
             if (icons.IsFailure) return BadRequest();
             if (icons.Value.Count() == 0) return NoContent();

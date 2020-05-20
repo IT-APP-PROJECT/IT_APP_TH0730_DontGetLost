@@ -1,9 +1,11 @@
-﻿using System;
+﻿using LiteDB;
+using System;
 
 namespace DontGetLost.Models
 {
     public class Image
     {
+        public ObjectId Id { get; set; }
         public string Name { get; set; }
         public Uri Url { get; set; }
 
@@ -12,6 +14,7 @@ namespace DontGetLost.Models
             this.Name = name;
             this.Url = url;
         }
+
         public Image()
         {
         }
