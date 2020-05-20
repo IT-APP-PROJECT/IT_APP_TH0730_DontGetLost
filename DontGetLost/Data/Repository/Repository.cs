@@ -25,16 +25,8 @@ namespace DontGetLost.Repository
         public Result<BsonValue> Create(T entity)
             => Guard(() => Collection.Insert(entity));
 
-        public Result<List<BsonValue>> Create(IEnumerable<T> entities)
-            => Guard(() => InsertBulk(entities).ToList());
-
-        private IEnumerable<BsonValue> InsertBulk(IEnumerable<T> entities)
-        {
-            foreach (var entity in entities)
-            {
-                yield return Collection.Insert(entity);
-            }
-        }
+        public Result<int> Create(IEnumerable<T> entities)
+            => Guard(() => Collection.Insert(entities));
 
         public Result<bool> Update(T entity)
             => Guard(() => Collection.Update(entity));

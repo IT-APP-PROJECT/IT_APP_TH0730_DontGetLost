@@ -8,7 +8,7 @@ namespace DontGetLost.Contracts
     {
         Result<BsonValue> Create(T entity);
 
-        Result<List<BsonValue>> Create(IEnumerable<T> entities);
+        Result<int> Create(IEnumerable<T> entities);
 
         Result<bool> Delete(int id);
 
