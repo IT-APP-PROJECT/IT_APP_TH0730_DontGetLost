@@ -1,0 +1,80 @@
+<mat-sidenav-container class="app-container">
+  <mat-sidenav class="sidenav" #sidenav mode="over" position="end">
+    <div class="sidenav-content">
+      <div class="icon-container">
+        <mat-icon class="toggle-menu-btn" 
+                  (click)="toggleMenu()">
+          arrow_forward
+        </mat-icon>
+      </div>
+      <div class="input-wrapper" [formGroup]="NavigationFormFroup">
+        <div class="controls-row">
+          <mat-form-field>
+            <mat-label>Wybierz budynek</mat-label>
+            <mat-select [(value)]="InitialBuilding" (selectionChange)="checkNavigationData()">
+              <mat-option *ngFor="let building of AvailableBuildings" [value]="building">
+                {{building.Name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Wprowadź salę początkową</mat-label>
+            <input matInput type="text" formControlName="InitialRoomFormControl">
+            <button mat-button *ngIf="ClearInitialRoomBtnVisibility" matSuffix mat-icon-button aria-label="Wyczyść" (click)="clearInitialRoom()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <div class="controls-row">
+          <mat-form-field>
+            <mat-label>Wybierz budynek</mat-label>
+            <mat-select [(value)]="FinalBuilding" (selectionChange)="checkNavigationData()">
+              <mat-option *ngFor="let building of AvailableBuildings" [value]="building">
+                {{building.Name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Wprowadź salę końcową</mat-label>
+            <input matInput type="text" formControlName="FinalRoomFormControl">
+            <button mat-button *ngIf="ClearFinalRoomBtnVisibility" matSuffix mat-icon-button aria-label="Wyczyść" (click)="clearFinalRoom()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <button mat-button class="navigate-btn" [disabled]="!IsNavigationEnabled" (click)="toggleNavigation()">
+          Rozpocznij nawigację
+        </button>  
+      </div>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="map-container">
+        <mat-list *ngIf="IsNonGeoMapActive">
+            <mat-list-item *ngFor="let floor of ActiveBuilding.Floors"> 
+                <button mat-button class="floor-btn" [ngClass]="{'selected': floor === ActiveFloor}" (click)="toggleFloorLayer(floor.Number)">
+                    {{floor.Display}}
+                </button> 
+            </mat-list-item>
+            <mat-list-item *ngIf="InitialBuilding !== FinalBuilding"> 
+              <button mat-button class="floor-btn" (click)="switchBuilding()">
+                  {{InactiveBuildingName}}
+              </button> 
+          </mat-list-item>
+        </mat-list>
+      <div class="icon-bg">
+        <mat-icon *ngIf="!IsMenuOpened" 
+                class="toggle-menu-btn" 
+                (click)="toggleMenu()">
+          arrow_back
+        </mat-icon>
+      </div>
+      <div class="map-frame">
+        <div id="map"></div>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<router-outlet></router-outlet>
