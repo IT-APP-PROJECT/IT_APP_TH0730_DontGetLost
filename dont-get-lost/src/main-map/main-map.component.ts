@@ -129,9 +129,9 @@ export class MainMapComponent {
         let iconPromise = this.getMapIcons(mapId)
         Promise.all([floorImagePromise, nonGeoMapPromise, mapPromise, iconPromise].map(p =>p.catch(e => e)))
         .finally(() => {
-            this.CurrentMapIcons.forEach((icon: Icon) => {
-                this.getCustomIconImage(icon.Type, icon.X, icon.Y).finally(() => {this.closeOverlay()});
-            });
+            // this.CurrentMapIcons.forEach((icon: Icon) => {
+            //     this.getCustomIconImage(icon.Type, icon.X, icon.Y).finally(() => {this.closeOverlay()});
+            // });
             this.closeOverlay();
         });
     }
@@ -279,7 +279,7 @@ export class MainMapComponent {
 
     private addRoomIconToMap(x: number, y: number, popupTitle: string, popupBody: string, popupLink): void {
         var icon = L.latLng([ y, x ]);
-        L.marker(icon).addTo(this.map).bindPopup(`<div class="popup-container"><h3>${popupTitle}</h3><p>${popupBody}<a href="${popupLink}"> - przejdź do wyszukiwarki prowadzących</a></p></div>`);
+        L.marker(icon).addTo(this.map).bindPopup(`<div class="popup-container"><h3>${popupTitle}</h3><p>${popupBody}</br><a href="${popupLink}" target="_blank">Wyszukiwarka prowadzących</a></p></div>`);
     }
 
     private retriveFloor(room: string): string {
