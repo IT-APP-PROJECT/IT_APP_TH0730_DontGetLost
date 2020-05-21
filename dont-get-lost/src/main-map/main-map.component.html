@@ -13,7 +13,7 @@
             <mat-label>Wybierz budynek</mat-label>
             <mat-select [(value)]="InitialBuilding">
               <mat-option *ngFor="let building of AvailableBuildings" [value]="building">
-                {{building}}
+                {{building.Name}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -30,7 +30,7 @@
             <mat-label>Wybierz budynek</mat-label>
             <mat-select [(value)]="FinalBuilding">
               <mat-option *ngFor="let building of AvailableBuildings" [value]="building">
-                {{building}}
+                {{building.Name}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -52,11 +52,16 @@
   <mat-sidenav-content>
     <div class="map-container">
         <mat-list *ngIf="IsNonGeoMapActive">
-            <mat-list-item *ngFor="let floor of Floors"> 
-                <button mat-button class="floor-btn" (click)="toggleFloorLayer(floor)">
-                    {{floor}}
+            <mat-list-item *ngFor="let floor of ActiveBuilding.Floors"> 
+                <button mat-button class="floor-btn" [ngClass]="{'selected': floor === ActiveFloor}" (click)="toggleFloorLayer(floor.Number)">
+                    {{floor.Display}}
                 </button> 
             </mat-list-item>
+            <mat-list-item *ngIf="InitialBuilding !== FinalBuilding"> 
+              <button mat-button class="floor-btn" (click)="switchBuilding()">
+                  {{InactiveBuildingName}}
+              </button> 
+          </mat-list-item>
         </mat-list>
       <div class="icon-bg">
         <mat-icon *ngIf="!IsMenuOpened" 

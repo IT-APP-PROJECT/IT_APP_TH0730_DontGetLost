@@ -1,6 +1,6 @@
-import { Point } from './Point.VM'
+import { Point } from './PointVM';
 
 export interface Map {
     PathPoints: Point[];
-    MapId: number;
+    MapId: string;
 }

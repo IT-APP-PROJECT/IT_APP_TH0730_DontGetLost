@@ -72,6 +72,9 @@
     &:hover {
         background-color: rgba($color:orange, $alpha: 0.1);
     }
+    &.selected {
+      background-color: papayawhip;
+    }
 }
 
 .sidenav-content {
@@ -117,6 +120,8 @@
     }
 
     .mat-list-item-content {
+      display: flex;
+      justify-content: center;
       padding: 0!important;
     }
 

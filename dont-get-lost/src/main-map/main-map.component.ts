@@ -5,11 +5,12 @@ import * as L from 'leaflet';
 import { Subject, Observable } from 'rxjs';
 import axios from "axios";
 
-import { MapData, floors } from '../resources/mapData';
+import { MapData, buildings, IconTitles } from '../resources/mapData';
 import { Map } from './../view-models/MapVM';
 import { Room } from './../view-models/RoomVM';
 import { Icon, IconType } from './../view-models/IconVM';
 import { Floor } from './../view-models/FloorVM';
+import { Building } from './../view-models/BuildingVM';
 import { OverlayService } from './../services/overlay.service';
 import { OverlayComponentRef } from './../overlay/overlay-component-ref';
 
@@ -27,32 +28,35 @@ export enum ActiveMapType {
 export class MainMapComponent {
     private destroy$ = new Subject<void>();
     private map: any;
-    private API_BASE_URL = 'https://localhost:44351';
+    private API_BASE_URL = 'https://localhost:5001';
 
     OnMenuClosedEvent$: Observable<void>;
     OnMenuOpenedEvent$: Observable<void>;
     IsMenuOpened: boolean;
-    IsRequesting: boolean;
-    //TODO mock data delete later
-    Floors = floors;
     BuildingsLayerGroup = new L.LayerGroup();
     FloorsLayerGroup = new L.LayerGroup();
     NavigationFormFroup: FormGroup;
     ClearInitialRoomBtnVisibility: boolean;
     ClearFinalRoomBtnVisibility: boolean;
-    AvailableBuildings: string[];
-    InitialBuilding: string;
-    FinalBuilding: string;
+    AvailableBuildings = buildings;
+    InitialBuilding: Building;
+    FinalBuilding: Building;
     CurrentMapIcons: Icon[];
     CurrentMap: Map;
     CurrentMapRooms: Room[];
     ActiveMapType: ActiveMapType;
+    ActiveBuilding: Building;
+    ActiveFloor: Floor;
+    IconType: IconType;
     OverlayRef: OverlayComponentRef;
+    SVGLink: string;
+    CustomIconLink: string;
+    IconTitles = IconTitles;
+    InactiveBuildingName: string;
 
     get IsNonGeoMapActive(): boolean {
         return this.ActiveMapType && this.ActiveMapType === ActiveMapType.NonGeo;
     }
-
 
     @ViewChild(MatSidenav)
     Menu: MatSidenav;
@@ -62,13 +66,13 @@ export class MainMapComponent {
             InitialRoomFormControl: new FormControl(''),
             FinalRoomFormControl: new FormControl(''),
         });
-        //TODO mock data remove later
-        this.AvailableBuildings = ['C3', 'C4'];
     }
 
     ngOnInit(): void {
-        this.IsRequesting = false;
         this.IsMenuOpened = false;
+        this.CurrentMap = {MapId: '', PathPoints: []};
+        this.CurrentMapIcons = [];
+        this.CurrentMapRooms = [];
         this.setGeoMap();
     }
 
@@ -94,66 +98,111 @@ export class MainMapComponent {
         this.Menu.toggle();
     }
 
-    toggleFloorLayer(floorNumber: number): void {
-        this.toggleOverlay();
+    toggleFloorLayer(floorNumber: string): void {
+        let mapId = `${this.ActiveBuilding.Name}-0${floorNumber}`;
+        this.ActiveFloor = this.ActiveBuilding.Floors.find((floor: Floor) => floor.Number === floorNumber);
+        this.setupLayerData(mapId);
     }
 
     toggleNavigation(): void {
-        //this.getGeoJsonMap(this.InitialBuilding, this.NavigationFormFroup.controls['InitialRoomFormControl'].value);
-        //let svgFileName = `./../assets/${this.CurrentMap.Building}_p${this.CurrentMap.Floor}.svg`;
-        let svgFileName = './../assets/C-3_p0.svg'
-        this.setNonGeoMap(svgFileName);
+        let floorNumber = this.retriveFloor(this.NavigationFormFroup.controls['InitialRoomFormControl'].value);
+        let mapId = `${this.InitialBuilding.Name}-0${floorNumber}`;
+        this.ActiveBuilding =  this.InitialBuilding;
+        this.InactiveBuildingName = this.FinalBuilding.Name;
+        this.ActiveFloor = this.ActiveBuilding.Floors.find((floor: Floor) => floor.Number === floorNumber);
         this.toggleMenu();
-        this.addDefaultIconToMap(600,800);
+        this.setupLayerData(mapId);
     }
 
-    getNonGeoMap = async (building: string, floor: string) => {
-        axios({  method: "GET", url: `${this.API_BASE_URL}/geoJsonMaps`, data: {
-            building: building,
-            floor: floor
-        }})
+    switchBuilding(): void {
+        this.ActiveBuilding = this.ActiveBuilding === this.InitialBuilding ? this.FinalBuilding : this.InitialBuilding;
+        this.InactiveBuildingName = this.ActiveBuilding === this.InitialBuilding ? this.FinalBuilding.Name : this.InitialBuilding.Name;
+        let floor = this.retriveFloor(this.NavigationFormFroup.controls['FinalRoomFormControl'].value);
+        this.toggleFloorLayer(floor);
+    }
+
+    setupLayerData(mapId: string): void {
+        this.toggleOverlay();
+        let floorImagePromise = this.getFloorImageURL(mapId);
+        let nonGeoMapPromise = this.getNonGeoMap(mapId);
+        let mapPromise = this.getMapRooms(mapId)
+        let iconPromise = this.getMapIcons(mapId)
+        Promise.all([floorImagePromise, nonGeoMapPromise, mapPromise, iconPromise].map(p =>p.catch(e => e)))
+        .finally(() => {
+            this.CurrentMapIcons.forEach((icon: Icon) => {
+                this.getCustomIconImage(icon.Type, icon.X, icon.Y).finally(() => {this.closeOverlay()});
+            });
+            this.closeOverlay();
+        });
+    }
+
+    getNonGeoMap = async (mapId: string) => {
+        axios({  method: "GET", url: `${this.API_BASE_URL}/pathPoints?mapName=${mapId}`})
         .then( (response) => {
-            this.CurrentMap =  response.data;
+            response.data.forEach((element: any) => {
+                this.CurrentMap.PathPoints.push({x: element.x, y: element.y})
+            });
+            this.CurrentMap.MapId =  mapId;
             })
         .catch(function (error) {
             console.log(error);
         });
     }
 
-    getMapIcons = async (mapId: number) => {
-        axios({  method: "GET", url: `${this.API_BASE_URL}/icons`, data: {mapId: mapId}})
+    getMapIcons = async (mapId: string) => {
+        axios({  method: "GET", url: `${this.API_BASE_URL}/icons?mapName=${mapId}`})
         .then( (response) => {
-            this.CurrentMapIcons =  response.data;
+            response.data.forEach((icon: any) => {
+                this.CurrentMapIcons.push({MapId: icon.mapName, Type: icon.type, X: icon.coordinates.x, Y: icon.coordinates.y});
+            });
         })
         .catch(function (error) {
             console.log(error);
         });
     }
 
-    getMapRooms = async (mapId: number) => {
-        axios({  method: "GET", url: `${this.API_BASE_URL}/rooms`, data: {mapId: mapId}})
+    getMapRooms = async (mapId: string) => {
+        axios({  method: "GET", url: `${this.API_BASE_URL}/rooms?mapName=${mapId}`})
         .then( (response) => {
-            this.CurrentMapRooms =  response.data;
+            response.data.forEach((room: any) => {
+                this.CurrentMapRooms.push({MapId: room.mapName, Title: room.name, Description: room.description, X: room.coordinates.x, Y: room.coordinates.y, Link: ''});
+            });
+            this.CurrentMapRooms.forEach((room: Room) => {
+                this.addRoomIconToMap(room.X, room.Y, room.Title, room.Description, room.Link);
+            });
         })
         .catch(function (error) {
             console.log(error);
         });
     }
 
-    getFloors = async (building: string) => {
-        axios({  method: "GET", url: `${this.API_BASE_URL}/floors`, data: {building: building}})
+    getFloorImageURL = async (svgName: string) => {
+        axios({  method: "GET", url: `${this.API_BASE_URL}/images?name=${svgName}`})
         .then( (response) => {
-            return response.data;
+            this.SVGLink = response.data.url;
+            this.setNonGeoMap(this.SVGLink);
         })
         .catch(function (error) {
             console.log(error);
         });
     }
 
-    getAvailableBuildings = async () => {
-        axios({  method: "GET", url: `${this.API_BASE_URL}/buildings`})
+    getCustomIconImage = async (iconType: IconType, x: number, y: number) => {
+        axios({  method: "GET", url: `${this.API_BASE_URL}/images?name=${iconType}`})
         .then( (response) => {
-            this.AvailableBuildings = response.data;
+            let popupTitle = this.IconTitles.find((iconTitle: any) => iconTitle.Type === IconType[iconType]);
+            var coordinates = L.latLng([ y, x ]);
+            var customIcon = L.icon({
+                iconUrl: response.data.url,
+                shadowUrl: '',
+            
+                iconSize:     [30, 30], 
+                shadowSize:   [0, 0],
+                iconAnchor:   [15, 15], 
+                shadowAnchor: [0, 0], 
+                popupAnchor:  [0, -15]
+            });
+            L.marker(coordinates, {icon: customIcon}).addTo(this.map).bindPopup('<h3>' + popupTitle + '</h3>');
         })
         .catch(function (error) {
             console.log(error);
@@ -174,7 +223,10 @@ export class MainMapComponent {
 
     toggleOverlay(): void {
         this.OverlayRef = this.overlayService.open();
-        setTimeout(() => {this.OverlayRef.close()}, 5000);
+    }
+
+    closeOverlay():void {
+        this.OverlayRef.close();
     }
 
     private setGeoMap(): void {
@@ -205,16 +257,16 @@ export class MainMapComponent {
         this.BuildingsLayerGroup.addLayer(layerBuildings);
     }
 
-    private setNonGeoMap(fileName: string): void {
+    private setNonGeoMap(imageURL: string): void {
         this.ActiveMapType = ActiveMapType.NonGeo;
+
         this.clearMap();
         this.map = L.map('map', {
             crs: L.CRS.Simple,
             maxZoom: 2,
         });
-
         var bounds = [[0,0], [1200,1200]];
-        L.imageOverlay(fileName, bounds).addTo(this.map);
+        L.imageOverlay(imageURL, bounds).addTo(this.map);
         this.map.fitBounds(bounds);
     }
 
@@ -225,8 +277,35 @@ export class MainMapComponent {
         }
     }
 
-    private addDefaultIconToMap(x: number, y: number): void {
+    private addRoomIconToMap(x: number, y: number, popupTitle: string, popupBody: string, popupLink): void {
         var icon = L.latLng([ y, x ]);
-        L.marker(icon).addTo(this.map);
+        L.marker(icon).addTo(this.map).bindPopup(`<div class="popup-container"><h3>${popupTitle}</h3><p>${popupBody}<a href="${popupLink}"> - przejdź do wyszukiwarki prowadzących</a></p></div>`);
+    }
+
+    private retriveFloor(room: string): string {
+        var numberRegex = /^[0-9]*$/g
+        if (room[0] === '0') {
+            return '0';
+        } else {
+            if (room.length > 2 && numberRegex.test(room[2])) {
+                switch(room[0]) {
+                    case '1': {
+                        return '2';
+                    }
+                    case '2': {
+                        return '3';
+                    }
+                    case '3': {
+                        return '4';
+                    }
+                    default: {
+                        return 'err';
+                    }
+                }
+            } else {
+                return '1'
+            }
+        }
+        
     }
 }

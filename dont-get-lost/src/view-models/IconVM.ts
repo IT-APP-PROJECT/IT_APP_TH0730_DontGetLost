@@ -8,5 +8,7 @@ export interface Icon {
 export enum IconType {
     Elevator, 
     Vendor,
-    Cloakroom
+    Cloakroom,
+    Toilet,
+    Stairs,
 }
