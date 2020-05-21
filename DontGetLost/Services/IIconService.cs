@@ -7,8 +7,10 @@ namespace DontGetLost.Services
 {
     public interface IIconService
     {
-        Result<IEnumerable<Icon>> GetIcons(int mapId);
+        Result<IEnumerable<Icon>> GetIcons(string mapName);
+
         Result DeleteIcon(int iconId);
+
         Result AddIcon(IconDto dto);
     }
 }

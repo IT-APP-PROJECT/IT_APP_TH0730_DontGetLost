@@ -1,28 +1,23 @@
-﻿
-using LiteDB;
-using System;
+﻿using LiteDB;
 
 namespace DontGetLost.Models
 {
-    
     public class Icon
     {
-        public int Id { get; set; }
-        public int MapId { get; set; }
+        public ObjectId Id { get; set; }
+        public string MapName { get; set; }
         public Point Coordinates { get; set; }
         public IconType Type { get; set; }
 
-
-        public Icon(int mapId, Point point, IconType type)
+        public Icon(string mapName, Point point, IconType type)
         {
             Type = type;
-            MapId = mapId;
+            MapName = mapName;
             Coordinates = point;
         }
 
         public Icon()
         {
-
         }
     }
-}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+}

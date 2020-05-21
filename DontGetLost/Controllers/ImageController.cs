@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using DontGetLost.Models;
+﻿using DontGetLost.Models;
 using DontGetLost.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -12,7 +7,6 @@ namespace DontGetLost.Controllers
 {
     public class ImageController : Controller
     {
-
         private readonly ILogger<ImageController> _logger;
 
         private readonly ICloudinaryService _cloudinary;
@@ -22,6 +16,7 @@ namespace DontGetLost.Controllers
             _logger = logger;
             _cloudinary = cloudinary;
         }
+
         public IActionResult Index()
         {
             return View();
@@ -36,6 +31,7 @@ namespace DontGetLost.Controllers
 
             return Ok(clouadinaryData);
         }
+
         [HttpGet]
         [Route("images")]
         public ActionResult<Image> Download(string name)
@@ -50,7 +46,6 @@ namespace DontGetLost.Controllers
                 _logger.LogError(result.Error);
                 return BadRequest();
             }
-
         }
     }
 }

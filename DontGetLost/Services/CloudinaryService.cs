@@ -1,12 +1,9 @@
-﻿using DontGetLost.Contracts;
-using DontGetLost.Models;
-using System;
-using System.Collections.Generic;
-
-using CloudinaryDotNet;
+﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
-using System.Linq;
 using CSharpFunctionalExtensions;
+using DontGetLost.Contracts;
+using DontGetLost.Models;
+using System.Linq;
 
 namespace DontGetLost.Services
 {
@@ -14,12 +11,10 @@ namespace DontGetLost.Services
     {
         private readonly IRepository<Image> m_cloudinaryRepository;
 
-
         private readonly Account account = new Account(
             "do4piuzmh",
             "276793959885363",
             "g_6fn5o1IpHBmAcma_MQkRDZKNE");
-
 
         private Cloudinary cloudinary;
 
@@ -41,8 +36,8 @@ namespace DontGetLost.Services
             m_cloudinaryRepository.Create(newImage);
 
             return newImage;
-
         }
+
         public Result<Image> getImage(string imageName)
         {
             var result = m_cloudinaryRepository.FindAll();
@@ -61,8 +56,5 @@ namespace DontGetLost.Services
 
             return Result.Failure<Image>("error");
         }
-
-
-
     }
 }

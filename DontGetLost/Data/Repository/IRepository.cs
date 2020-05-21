@@ -7,9 +7,15 @@ namespace DontGetLost.Contracts
     public interface IRepository<T>
     {
         Result<BsonValue> Create(T entity);
+
+        Result<int> Create(IEnumerable<T> entities);
+
         Result<bool> Delete(int id);
+
         Result<IEnumerable<T>> FindAll();
+
         Result<IEnumerable<T>> FindAllWhere(BsonExpression predicate);
+
         Result<bool> Update(T entity);
     }
 }
