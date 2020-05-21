@@ -53,6 +53,7 @@ export class MainMapComponent {
     CustomIconLink: string;
     IconTitles = IconTitles;
     InactiveBuildingName: string;
+    IsNavigationEnabled = false;
 
     get IsNonGeoMapActive(): boolean {
         return this.ActiveMapType && this.ActiveMapType === ActiveMapType.NonGeo;
@@ -83,9 +84,11 @@ export class MainMapComponent {
         this.OnMenuClosedEvent$.subscribe(() => setTimeout(() => this.IsMenuOpened = false, 200));
         this.NavigationFormFroup.controls['InitialRoomFormControl'].valueChanges.subscribe((value: string) => {
             this.ClearInitialRoomBtnVisibility = this.stringHasValue(value);
+            this.checkNavigationData();
         });
         this.NavigationFormFroup.controls['FinalRoomFormControl'].valueChanges.subscribe((value: string) => {
             this.ClearFinalRoomBtnVisibility = this.stringHasValue(value);
+            this.checkNavigationData();
         });
     }
 
@@ -227,6 +230,16 @@ export class MainMapComponent {
 
     closeOverlay():void {
         this.OverlayRef.close();
+    }
+
+    checkNavigationData(): void {
+        if(this.InitialBuilding && this.FinalBuilding && 
+           this.stringHasValue(this.NavigationFormFroup.controls['InitialRoomFormControl'].value) &&
+           this.stringHasValue(this.NavigationFormFroup.controls['FinalRoomFormControl'].value)) {
+            this.IsNavigationEnabled = true;
+        } else {
+            this.IsNavigationEnabled = false;
+        }
     }
 
     private setGeoMap(): void {

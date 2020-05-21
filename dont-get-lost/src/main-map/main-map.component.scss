@@ -88,6 +88,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 0 20px;
   mat-form-field:nth-child(even) {
     width: 65%;
     padding: 5px;
@@ -102,6 +103,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  width: 100%;
 }
 
 .navigate-btn {
