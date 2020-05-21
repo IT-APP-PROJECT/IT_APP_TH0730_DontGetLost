@@ -31,6 +31,9 @@ namespace DontGetLost.Data.Seed
             return icons;
         }
 
+        private IEnumerable<Icon> GenerateIcons(string mapName, List<(int x, int y, IconType type)> dataTuples)
+          => dataTuples.Select(t => new Icon(mapName, new Point(t.x, t.y), t.type));
+
         private IEnumerable<Icon> GetC300Icons()
           => GenerateIcons(Maps.C300, new List<(int, int, IconType)>
           {
@@ -67,7 +70,5 @@ namespace DontGetLost.Data.Seed
         private IEnumerable<Icon> GetC404Icons()
           => GenerateIcons(Maps.C404, new List<(int, int, IconType)>());
 
-        private IEnumerable<Icon> GenerateIcons(string mapName, List<(int x, int y, IconType type)> dataTuples)
-          => dataTuples.Select(t => new Icon(mapName, new Point(t.x, t.y), t.type));
     }
 }

@@ -22,7 +22,7 @@ namespace DontGetLost.Services
                 .Bind(room => m_roomRepository.Create(room));
 
         private Result<Room> MapRoomDtoToRoom(RoomDto dto)
-            => Result.Success(new Room(dto.Name, dto.MapName, new Point(dto.X, dto.Y), dto.Description));
+            => Result.Success(new Room(dto.Name, dto.MapName, new Point(dto.X, dto.Y), dto.Description, dto.Url));
 
         public Result DeleteRoom(int roomId)
             => m_roomRepository.Delete(roomId);
