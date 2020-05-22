@@ -23,7 +23,12 @@ namespace DontGetLost.Data.Seed
                  (Maps.C401, "v1589896459/hpwvdyzsyfvc9kmslxuc.svg"),
                  (Maps.C402, "v1589896449/a1q5u6wxvprkq6iimocx.svg"),
                  (Maps.C403, "v1589896427/sda1vydpebgojupqnda0.svg"),
-                 (Maps.C404, "v1589896412/kvhxtwtf0vt0vktawsif.svg")
+                 (Maps.C404, "v1589896412/kvhxtwtf0vt0vktawsif.svg"),
+                 ("Elevator", "v1590167486/lhjxaqgape9945tnntdp.svg"),
+                 ("Stairs", "v1590167506/vlplhep6m1hmgdtfjusk.svg"),
+                 ("Toilet","v1590167527/ejvr5sggapgz1ztrqxrp.svg"),
+                 ("Vendor","v1590167543/l2egz3wthcpilp62yby5.svg"),
+                 ("Cloakroom","v1590167426/ucvbxfef4pvgleu9fjxx.svg")
             });
         }
 
