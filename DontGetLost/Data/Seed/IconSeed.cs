@@ -62,13 +62,19 @@ namespace DontGetLost.Data.Seed
           => GenerateIcons(Maps.C401, new List<(int, int, IconType)>());
 
         private IEnumerable<Icon> GetC402Icons()
-          => GenerateIcons(Maps.C402, new List<(int, int, IconType)>());
+          => GenerateIcons(Maps.C402, new List<(int, int, IconType)>{
+              (1100, 745, IconType.Toilet)
+          });
 
         private IEnumerable<Icon> GetC403Icons()
-          => GenerateIcons(Maps.C403, new List<(int, int, IconType)>());
+          => GenerateIcons(Maps.C403, new List<(int, int, IconType)>{
+              (1100, 760, IconType.Toilet)
+          });
 
         private IEnumerable<Icon> GetC404Icons()
-          => GenerateIcons(Maps.C404, new List<(int, int, IconType)>());
+          => GenerateIcons(Maps.C404, new List<(int, int, IconType)> {
+              (1095, 755, IconType.Toilet)
+          });
 
     }
 }

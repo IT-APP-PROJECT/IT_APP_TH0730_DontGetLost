@@ -99,12 +99,76 @@ namespace DontGetLost.Data.Seed
           => GeneratePathPoints(Maps.C401, new List<(int, int)>());
 
         private IEnumerable<PathPoint> GetC402PathPoints()
-          => GeneratePathPoints(Maps.C402, new List<(int, int)>());
+          => GeneratePathPoints(Maps.C402, new List<(int, int)>()
+              .Add(MoveAlongsideX(15, 1150, 630))   // Corridor
+                 .Add(MoveAlongsideY(630, 740, 210))   // 131
+                 .Add(MoveAlongsideY(630, 740, 260))   // 132
+                 .Add(MoveAlongsideY(630, 740, 430))   // 132b
+                 .Add(MoveAlongsideY(630, 740, 560))   // 132c
+                 .Add(MoveAlongsideY(630, 740, 610))   // 133
+                 .Add(MoveAlongsideY(630, 740, 750))   // 134
+                 .Add(MoveAlongsideY(630, 740, 805))   // 135
+                 .Add(MoveAlongsideY(630, 740, 940))   // 136
+                 .Add(MoveAlongsideY(630, 740, 995))   // 137
+                 .Add(MoveAlongsideY(630, 740, 1115)) // Tiolet
+
+                 .Add(MoveAlongsideY(500, 630, 1115))  // 138
+                 .Add(MoveAlongsideY(555, 630, 820))   // 139
+                 .Add(MoveAlongsideX(820, 950, 555))   // 139a_1
+                 .Add(MoveAlongsideY(490, 555, 950))   // 139a_2
+                 .Add(MoveAlongsideY(500, 555, 820))   // 139b
+                 .Add(MoveAlongsideY(490, 630, 715))   // 139c
+                 .Add(MoveAlongsideY(555, 630, 405))   // 140_1
+                 .Add(MoveAlongsideX(405, 510, 555))   // 140_2
+                 .Add(MoveAlongsideY(500, 630, 255))   // 141
+                 .Add(MoveAlongsideY(500, 630, 70))   // 142
+                  );
 
         private IEnumerable<PathPoint> GetC403PathPoints()
-          => GeneratePathPoints(Maps.C403, new List<(int, int)>());
+          => GeneratePathPoints(Maps.C403, new List<(int, int)>()
+              .Add(MoveAlongsideX(15, 1150, 630))   // Corridor
+                 .Add(MoveAlongsideY(630, 730, 80))   // 231
+                 .Add(MoveAlongsideY(630, 730, 215))   // 232
+                 .Add(MoveAlongsideY(630, 730, 275))   // 233
+                 .Add(MoveAlongsideY(630, 730, 400))   // 234
+                 .Add(MoveAlongsideY(630, 730, 460))   // 235
+                 .Add(MoveAlongsideY(630, 730, 595))   // 236
+                 .Add(MoveAlongsideY(630, 730, 640))   // 237
+                 .Add(MoveAlongsideY(630, 730, 780))   // 238
+                 .Add(MoveAlongsideY(630, 730, 835))   // 239
+                 .Add(MoveAlongsideY(630, 730, 960))   // 240
+                 .Add(MoveAlongsideY(630, 730, 1010))   // 241
+                 .Add(MoveAlongsideY(630, 730, 1100)) // Tiolet
+
+                 .Add(MoveAlongsideY(500, 630, 1100))  // 243
+                 .Add(MoveAlongsideY(500, 630, 940))   // 244
+                 .Add(MoveAlongsideY(500, 630, 810))   // 245
+                 .Add(MoveAlongsideY(500, 630, 750))   // 246
+                 .Add(MoveAlongsideY(560, 630, 265))   // 247_1
+                 .Add(MoveAlongsideX(265, 445, 560))   // 247_2
+                 .Add(MoveAlongsideY(500, 630, 200))   // 248
+                  );
 
         private IEnumerable<PathPoint> GetC404PathPoints()
-          => GeneratePathPoints(Maps.C404, new List<(int, int)>());
+          => GeneratePathPoints(Maps.C404, new List<(int, int)>()
+              .Add(MoveAlongsideX(60, 1130, 620))   // Corridor
+                 .Add(MoveAlongsideY(620, 740, 100))   // 331
+                 .Add(MoveAlongsideY(620, 740, 240))   // 332
+                 .Add(MoveAlongsideY(620, 740, 290))   // 333
+                 .Add(MoveAlongsideY(620, 740, 420))   // 334
+                 .Add(MoveAlongsideY(620, 740, 475))   // 335
+                 .Add(MoveAlongsideY(620, 740, 605))   // 336
+                 .Add(MoveAlongsideY(620, 740, 650))   // 337
+                 .Add(MoveAlongsideY(620, 740, 785))   // 338
+                 .Add(MoveAlongsideY(620, 740, 835))   // 339
+                 .Add(MoveAlongsideY(620, 740, 950))   // 340
+                 .Add(MoveAlongsideY(620, 740, 1100)) // Tiolet
+
+                 .Add(MoveAlongsideY(500, 620, 1100))  // 342
+                 .Add(MoveAlongsideY(565, 620, 785))   // 344
+                 .Add(MoveAlongsideY(520, 620, 620))   // 345
+                 .Add(MoveAlongsideY(480, 620, 220))   // 346
+                 .Add(MoveAlongsideX(150, 220, 540))   // 348
+                  );
     }
 }
