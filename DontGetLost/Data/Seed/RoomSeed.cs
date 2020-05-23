@@ -77,12 +77,63 @@ namespace DontGetLost.Data.Seed
           => GenerateRooms(Maps.C401, new List<(string, int, int, string, string)>());
 
         private IEnumerable<Room> GetC402Rooms()
-          => GenerateRooms(Maps.C402, new List<(string, int, int, string, string)>());
+          => GenerateRooms(Maps.C402, new List<(string, int, int, string, string)>{
+                ("131", 100, 760, "Add description", "plansali.php?pole=84" ),
+                ("132", 200, 760, "Add description", "" ),
+                ("132b", 290, 760, "Add description", "" ),
+                ("132c", 395, 760, "Add description", "" ),
+                ("133", 480, 760, "Add description", "" ),
+                ("134", 575, 760, "Add description", "" ),
+                ("135", 665, 760, "Add description", "" ),
+                ("136", 760, 760, "Add description", "" ),
+                ("137", 858, 760, "Add description", "" ),
+                ("138", 940, 760, "Add description", "" ),
+                ("139a", 1020, 760, "Add description", "plansali.php?pole=81" ),
+                ("139b", 1100, 475, "Add description", "plansali.php?pole=82" ),
+                ("139c", 985, 475, "Add description", "" ),
+                ("140", 855, 475, "Add description", "" ),
+                ("141", 725, 475, "Add description", "" ),
+                ("142", 135, 475, "Add description", "plansali.php?pole=80" ),
+             });
 
         private IEnumerable<Room> GetC403Rooms()
-          => GenerateRooms(Maps.C403, new List<(string, int, int, string, string)>());
+          => GenerateRooms(Maps.C403, new List<(string, int, int, string, string)>{
+                ("231", 100, 760, "Add description", "plansali.php?pole=1190" ),
+                ("232", 200, 760, "Add description", "plansali.php?pole=1151" ),
+                ("233", 290, 760, "Add description", "" ),
+                ("234", 395, 760, "Add description", "" ),
+                ("235", 480, 760, "Add description", "plansali.php?pole=1088" ),
+                ("236", 575, 760, "Add description", "plansali.php?pole=1074" ),
+                ("237", 665, 760, "Add description", "" ),
+                ("238", 760, 760, "Add description", "" ),
+                ("239", 858, 760, "Add description", "" ),
+                ("240", 940, 760, "Add description", "" ),
+                ("241", 1020, 760, "Add description", "" ),
+                ("243", 1100, 475, "Add description", "" ),
+                ("244", 985, 475, "Add description", "" ),
+                ("245", 855, 475, "Add description", "" ),
+                ("246", 725, 475, "Add description", "" ),
+                ("247", 135, 475, "Add description", "plansali.php?pole=128" ),
+                ("248", 440, 565, "Add description", "plansali.php?pole=67" ),
+             });
 
         private IEnumerable<Room> GetC404Rooms()
-          => GenerateRooms(Maps.C404, new List<(string, int, int, string, string)>());
+          => GenerateRooms(Maps.C404, new List<(string, int, int, string, string)>{
+                ("331", 125, 755, "Add description", "plansali.php?pole=1006" ),
+                ("332", 220, 755, "Add description", "plansali.php?pole=1007" ),
+                ("333", 310, 755, "Add description", "" ),
+                ("334", 400, 755, "Add description", "plansali.php?pole=1225" ),
+                ("335", 490, 755, "Add description", "" ),
+                ("336", 580, 755, "Add description", "" ),
+                ("337", 675, 755, "Add description", "" ),
+                ("338", 760, 755, "Add description", "" ),
+                ("339", 870, 755, "Add description", "" ),
+                ("340", 995, 755, "Add description", "" ),
+                ("342", 1070, 564, "Add description", "" ),
+                ("344", 785, 565, "Add description", "plansali.php?pole=65" ),
+                ("345", 495, 480, "Add description", "plansali.php?pole=76" ),
+                ("346", 265, 480, "Add description", "" ),
+                ("348", 135, 480, "Add description", "" ),
+             });
     }
 }
