@@ -56,28 +56,28 @@ namespace DontGetLost.Data.Seed
         private IEnumerable<PathPoint> GetC300PathPoints()
           => GeneratePathPoints(Maps.C300,
                new List<(int, int)>()
-                 .Add(MoveAlongsideX(80, 1140, 625))   // Corridor
-                 .Add(MoveAlongsideY(625, 670, 85))    // 01
-                 .Add(MoveAlongsideY(625, 670, 115))   // 02
-                 .Add(MoveAlongsideY(625, 670, 190))   // 03
-                 .Add(MoveAlongsideY(625, 670, 330))   // 05
-                 .Add(MoveAlongsideY(625, 670, 540))   // 07
-                 .Add(MoveAlongsideY(625, 670, 615))   // 010
-                 .Add(MoveAlongsideY(625, 670, 720))   // 011
-                 .Add(MoveAlongsideY(625, 670, 825))   // 013a
-                 .Add(MoveAlongsideY(625, 670, 970))   // 013
-                 .Add(MoveAlongsideY(625, 700, 1100))  // 014 (up)
+                 .Add(MoveAlongsideX(80, 1140, 600))   // Corridor
+                 .Add(MoveAlongsideY(600, 670, 85))    // 01
+                 .Add(MoveAlongsideY(600, 670, 115))   // 02
+                 .Add(MoveAlongsideY(600, 670, 190))   // 03
+                 .Add(MoveAlongsideY(600, 670, 330))   // 05
+                 .Add(MoveAlongsideY(600, 670, 540))   // 07
+                 .Add(MoveAlongsideY(600, 670, 615))   // 010
+                 .Add(MoveAlongsideY(600, 670, 720))   // 011
+                 .Add(MoveAlongsideY(600, 670, 825))   // 013a
+                 .Add(MoveAlongsideY(600, 670, 970))   // 013
+                 .Add(MoveAlongsideY(600, 700, 1100))  // 014 (up)
                  .Add(MoveAlongsideX(1060, 1100, 700)) // 014 (left)
                  .Add(MoveAlongsideX(1100, 1160, 640)) // Stairs (right)
-                 .Add(MoveAlongsideY(500, 625, 1050))  // 015
-                 .Add(MoveAlongsideY(500, 625, 930))   // 016
-                 .Add(MoveAlongsideY(500, 625, 820))   // 017
-                 .Add(MoveAlongsideY(500, 625, 760))   // 018
-                 .Add(MoveAlongsideY(500, 625, 630))   // 019
+                 .Add(MoveAlongsideY(500, 600, 1050))  // 015
+                 .Add(MoveAlongsideY(500, 600, 930))   // 016
+                 .Add(MoveAlongsideY(500, 600, 820))   // 017
+                 .Add(MoveAlongsideY(500, 600, 760))   // 018
+                 .Add(MoveAlongsideY(500, 600, 630))   // 019
                  .Add(MoveAlongsideY(500, 540, 475))   // Elevator
-                 .Add(MoveAlongsideY(500, 625, 370))   // Stairs
-                 .Add(MoveAlongsideY(500, 625, 220))   // 021
-                 .Add(MoveAlongsideY(500, 625, 100))   // 022
+                 .Add(MoveAlongsideY(500, 600, 370))   // Stairs
+                 .Add(MoveAlongsideY(500, 600, 220))   // 021
+                 .Add(MoveAlongsideY(500, 600, 100))   // 022
                   );
 
         private IEnumerable<PathPoint> GetC301PathPoints()
