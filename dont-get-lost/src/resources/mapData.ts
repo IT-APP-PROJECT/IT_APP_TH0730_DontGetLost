@@ -83,7 +83,7 @@ let floors = [
 ]
 
 let C3 = {Name: 'C3', Floors: floors};
-let C4 = {Name: 'C4', Floor: floors};
+let C4 = {Name: 'C4', Floors: floors};
 
 export let buildings = [C3, C4];
 
@@ -93,4 +93,17 @@ export let IconTitles = [
     {Type: IconType[2], Title: 'Szatnia'},
     {Type: IconType[3], Title: 'Łazienka'},
     {Type: IconType[4], Title: 'Klatka schodowa'},
+]
+
+export let corridorCoordinates = [
+    {mapId: 'C3-00', y: 600},
+    {mapId: 'C3-01', y: 0},
+    {mapId: 'C3-02', y: 0},
+    {mapId: 'C3-03', y: 0},
+    {mapId: 'C3-04', y: 0},
+    {mapId: 'C4-00', y: 0},
+    {mapId: 'C4-01', y: 0},
+    {mapId: 'C4-02', y: 630},
+    {mapId: 'C4-03', y: 630},
+    {mapId: 'C4-04', y: 620},
 ]
