@@ -61,9 +61,11 @@ namespace DontGetLost.Data.Seed
                  .Add(MoveAlongsideY(600, 670, 115))   // 02
                  .Add(MoveAlongsideY(600, 670, 190))   // 03
                  .Add(MoveAlongsideY(600, 670, 330))   // 05
+                 .Add(MoveAlongsideY(600, 670, 410))   // 06
                  .Add(MoveAlongsideY(600, 670, 540))   // 07
                  .Add(MoveAlongsideY(600, 670, 615))   // 010
                  .Add(MoveAlongsideY(600, 670, 720))   // 011
+                 .Add(MoveAlongsideY(600, 670, 755))   // 011
                  .Add(MoveAlongsideY(600, 670, 825))   // 013a
                  .Add(MoveAlongsideY(600, 670, 970))   // 013
                  .Add(MoveAlongsideY(600, 700, 1100))  // 014 (up)
@@ -115,20 +117,20 @@ namespace DontGetLost.Data.Seed
                  .Add(MoveAlongsideY(515, 625, 375))   // Stairs
                  .Add(MoveAlongsideY(625, 675, 1070))   // Stairs
 
-                 .Add(MoveAlongsideY(505, 625, 1130))   // 318/318a
-                 .Add(MoveAlongsideY(505, 625, 1030))   // 319
-                 .Add(MoveAlongsideY(505, 625, 925))   // 320
-                 .Add(MoveAlongsideY(505, 625, 825))   // 320a
-                 .Add(MoveAlongsideY(505, 625, 765))   // 321
-                 .Add(MoveAlongsideY(505, 625, 725))   // 322
-                 .Add(MoveAlongsideY(505, 625, 665))   // 323
-                 .Add(MoveAlongsideY(505, 625, 625))   // 324
-                 .Add(MoveAlongsideY(505, 625, 555))   // 325
-                 .Add(MoveAlongsideY(505, 625, 285))   // 328
-                 .Add(MoveAlongsideY(505, 625, 220))   // 329
-                 .Add(MoveAlongsideY(505, 625, 185))   // 330
-                 .Add(MoveAlongsideY(505, 625, 110))   // 331
-                 .Add(MoveAlongsideY(505, 625, 80))   // 332
+                 .Add(MoveAlongsideY(530, 625, 1130))   // 318/318a
+                 .Add(MoveAlongsideY(530, 625, 1030))   // 319
+                 .Add(MoveAlongsideY(530, 625, 925))   // 320
+                 .Add(MoveAlongsideY(530, 625, 825))   // 320a
+                 .Add(MoveAlongsideY(530, 625, 765))   // 321
+                 .Add(MoveAlongsideY(530, 625, 725))   // 322
+                 .Add(MoveAlongsideY(530, 625, 665))   // 323
+                 .Add(MoveAlongsideY(530, 625, 625))   // 324
+                 .Add(MoveAlongsideY(530, 625, 555))   // 325
+                 .Add(MoveAlongsideY(530, 625, 285))   // 328
+                 .Add(MoveAlongsideY(530, 625, 220))   // 329
+                 .Add(MoveAlongsideY(530, 625, 185))   // 330
+                 .Add(MoveAlongsideY(530, 625, 110))   // 331
+                 .Add(MoveAlongsideY(530, 625, 80))   // 332
           );
 
         private IEnumerable<PathPoint> GetC400PathPoints()
@@ -160,7 +162,7 @@ namespace DontGetLost.Data.Seed
 
                  .Add(MoveAlongsideY(575, 710, 825))   // 39
                  .Add(MoveAlongsideY(575, 710, 765))   // 40
-                 .Add(MoveAlongsideY(575, 710, 195))   // 41/42
+                 .Add(MoveAlongsideY(575, 710, 350))   // 41/42
                   );
 
         private IEnumerable<PathPoint> GetC402PathPoints()
@@ -233,7 +235,8 @@ namespace DontGetLost.Data.Seed
                  .Add(MoveAlongsideY(565, 620, 785))   // 344
                  .Add(MoveAlongsideY(520, 620, 620))   // 345
                  .Add(MoveAlongsideY(480, 620, 220))   // 346
-                 .Add(MoveAlongsideX(150, 220, 540))   // 348
+                 .Add(MoveAlongsideX(150, 210, 540))   // 348
+                 .Add(MoveAlongsideY(540, 620, 210))   // 348
                   );
     }
 }
