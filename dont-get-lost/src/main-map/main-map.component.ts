@@ -102,6 +102,10 @@ export class MainMapComponent {
     }
 
     toggleMenu(): void {
+        if (!this.Menu.opened) {
+            this.InitialBuilding = this.AvailableBuildings[1];
+            this.FinalBuilding = this.AvailableBuildings[1];
+        }
         this.Menu.toggle();
     }
 
@@ -139,12 +143,13 @@ export class MainMapComponent {
 
     switchMapMode(): void {
         this.clearNavigationData();
-        this.ActiveBuilding = this.AvailableBuildings[0];
+        this.ActiveBuilding = this.AvailableBuildings[1];
         this.InitialBuilding = this.ActiveBuilding;
-        this.FinalBuilding = this.AvailableBuildings[1];
+        this.FinalBuilding = this.AvailableBuildings[0];
         this.InactiveBuildingName = this.FinalBuilding.Name;
+        this.ActiveFloor = this.ActiveBuilding.Floors[0];
         if (this.ActiveMapType === ActiveMapType.Geo) {
-            this.setupLayerData('C3-00', false)
+            this.setupLayerData('C4-00', false)
         } else {
             this.switchToGeoMap();
         }
@@ -330,7 +335,7 @@ export class MainMapComponent {
         let path = [];
         let corridor = this.CorridorCoordinates.get(mapId);
         path.push(point);
-        path.push(this.findNearestPoint(point, this.CurrentMap.PathPoints, 100));
+        path.push(this.findNearestPoint(point, this.CurrentMap.PathPoints, 150));
         while(path[path.length - 1].y !== corridor) {
             path.push(this.findNearestPointDistance(path[path.length - 1], path, 5));
         }

@@ -47,7 +47,7 @@ namespace DontGetLost.Data.Seed
                 ("011", 700, 670, "", ""),
                 ("012", 765, 670, "", ""),
                 ("013a", 815, 670, "", ""),
-                ("013", 900, 670, "", ""),
+                ("013", 930, 670, "", ""),
                 ("014", 1040, 700, "", ""),
                 ("015", 1040, 490, "", ""),
                 ("016", 880, 490, "", ""),
@@ -108,13 +108,13 @@ namespace DontGetLost.Data.Seed
           {
             ("0.32", 150, 765, "", ""),
             ("0.33", 325, 765, "", ""),
-            ("0.34", 600, 765, "", ""),
+            ("0.34", 550, 765, "", ""),
             ("0.35", 825, 765, "", ""),
             ("0.36", 925, 765, "", ""),
-            ("0.38", 995, 465, "", ""),
-            ("0.39", 715, 465, "", ""),
-            ("0.40", 505, 465, "", ""),
-            ("0.41", 225, 465, "", ""),
+            ("0.38", 995, 460, "", ""),
+            ("0.39", 715, 460, "", ""),
+            ("0.40", 505, 460, "", ""),
+            ("0.41", 305, 460, "", ""),
              });
 
         private IEnumerable<Room> GetC401Rooms()
@@ -132,8 +132,9 @@ namespace DontGetLost.Data.Seed
              });
 
         private IEnumerable<Room> GetC402Rooms()
-          => GenerateRooms(Maps.C402, new List<(string, int, int, string, string)>{
-            ("131", 100, 760, "lecture hall", "https://prowadzacy.eka.pwr.edu.pl/plansali.php?pole=84" ),
+          => GenerateRooms(Maps.C402, new List<(string, int, int, string, string)>
+          {
+            ("131", 145, 760, "lecture hall", "https://prowadzacy.eka.pwr.edu.pl/plansali.php?pole=84" ),
             ("132", 300, 760, " ", "" ),
             ("132b", 445, 760, " ", "" ),
             ("132c", 530, 760, " ", "" ),
@@ -146,7 +147,7 @@ namespace DontGetLost.Data.Seed
             ("139a", 910, 475, "lecture hall", "https://prowadzacy.eka.pwr.edu.pl/plansali.php?pole=81" ),
             ("139b", 810, 475, "lecture hall", "https://prowadzacy.eka.pwr.edu.pl/plansali.php?pole=82" ),
             ("139c", 715, 475, " ", "" ),
-            ("140", 480, 525, " ", "" ),
+            ("140", 530, 560, " ", "" ),
             ("141", 250, 475, " ", "" ),
             ("142", 135, 475, "lecture hall", "https://prowadzacy.eka.pwr.edu.pl/plansali.php?pole=80" ),
              });

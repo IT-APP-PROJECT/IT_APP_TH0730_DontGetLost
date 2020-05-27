@@ -72,7 +72,9 @@ namespace DontGetLost.Data.Seed
                  .Add(MoveAlongsideX(1060, 1100, 700)) // 014 (left)
                  .Add(MoveAlongsideX(1100, 1160, 640)) // Stairs (right)
                  .Add(MoveAlongsideY(500, 600, 1050))  // 015
-                 .Add(MoveAlongsideY(500, 600, 930))   // 016
+                 .Add(MoveAlongsideY(545, 600, 930))   // 016_1
+                 .Add(MoveAlongsideX(880, 930, 545))   // 016_2
+                 .Add(MoveAlongsideY(500, 545, 880))   // 016_3
                  .Add(MoveAlongsideY(500, 600, 820))   // 017
                  .Add(MoveAlongsideY(500, 600, 760))   // 018
                  .Add(MoveAlongsideY(500, 600, 630))   // 019
@@ -143,10 +145,10 @@ namespace DontGetLost.Data.Seed
                  .Add(MoveAlongsideY(625, 765, 810))   // 0.35
                  .Add(MoveAlongsideY(625, 765, 945))   // 0.36
 
-                 .Add(MoveAlongsideY(465, 605, 945))   // 0.38
-                 .Add(MoveAlongsideY(465, 605, 765))   // 0.39
-                 .Add(MoveAlongsideY(465, 605, 445))   // 0.40
-                 .Add(MoveAlongsideY(465, 605, 390))   // 0.41
+                 .Add(MoveAlongsideY(480, 625, 945))   // 0.38
+                 .Add(MoveAlongsideY(480, 625, 765))   // 0.39
+                 .Add(MoveAlongsideY(480, 625, 445))   // 0.40
+                 .Add(MoveAlongsideY(480, 625, 390))   // 0.41
                   );
 
         private IEnumerable<PathPoint> GetC401PathPoints()
@@ -159,7 +161,6 @@ namespace DontGetLost.Data.Seed
                  .Add(MoveAlongsideY(710, 820, 715))   // 34
                  .Add(MoveAlongsideY(710, 820, 785))   // 35
                  .Add(MoveAlongsideY(710, 820, 1030))   // 37
-
                  .Add(MoveAlongsideY(575, 710, 825))   // 39
                  .Add(MoveAlongsideY(575, 710, 765))   // 40
                  .Add(MoveAlongsideY(575, 710, 350))   // 41/42
@@ -181,8 +182,9 @@ namespace DontGetLost.Data.Seed
 
                  .Add(MoveAlongsideY(500, 630, 1115))  // 138
                  .Add(MoveAlongsideY(555, 630, 820))   // 139
-                 .Add(MoveAlongsideX(820, 950, 555))   // 139a_1
-                 .Add(MoveAlongsideY(490, 555, 950))   // 139a_2
+                 .Add(MoveAlongsideX(830, 950, 555))   // 139a_1
+                 .Add(MoveAlongsideY(490, 560, 950))   // 139a_2
+                 .Add(MoveAlongsideY(555, 630, 830))   // 139a_3
                  .Add(MoveAlongsideY(500, 555, 820))   // 139b
                  .Add(MoveAlongsideY(490, 630, 715))   // 139c
                  .Add(MoveAlongsideY(555, 630, 405))   // 140_1
