@@ -95,15 +95,14 @@ export let IconTitles = [
     {Type: IconType[4], Title: 'Klatka schodowa'},
 ]
 
-export let corridorCoordinates = [
-    {mapId: 'C3-00', y: 600},
-    {mapId: 'C3-01', y: 0},
-    {mapId: 'C3-02', y: 0},
-    {mapId: 'C3-03', y: 0},
-    {mapId: 'C3-04', y: 0},
-    {mapId: 'C4-00', y: 0},
-    {mapId: 'C4-01', y: 0},
-    {mapId: 'C4-02', y: 630},
-    {mapId: 'C4-03', y: 630},
-    {mapId: 'C4-04', y: 620},
-]
+export let corridorCoordinates =  new Map();
+corridorCoordinates.set('C3-00', 600);
+corridorCoordinates.set('C3-01', 0);
+corridorCoordinates.set('C3-02', 0);
+corridorCoordinates.set('C3-03', 0);
+corridorCoordinates.set('C3-04', 625);
+corridorCoordinates.set('C4-00', 625);
+corridorCoordinates.set('C4-01', 710);
+corridorCoordinates.set('C4-02', 630);
+corridorCoordinates.set('C4-03', 630);
+corridorCoordinates.set('C4-04', 630);

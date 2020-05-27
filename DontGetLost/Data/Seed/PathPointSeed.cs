@@ -56,7 +56,7 @@ namespace DontGetLost.Data.Seed
         private IEnumerable<PathPoint> GetC300PathPoints()
           => GeneratePathPoints(Maps.C300,
                new List<(int, int)>()
-                 .Add(MoveAlongsideX(80, 1140, 600))   // Corridor
+                 .Add(MoveAlongsideX(80, 1170, 600))   // Corridor
                  .Add(MoveAlongsideY(600, 670, 85))    // 01
                  .Add(MoveAlongsideY(600, 670, 115))   // 02
                  .Add(MoveAlongsideY(600, 670, 190))   // 03
@@ -88,8 +88,11 @@ namespace DontGetLost.Data.Seed
 
         private IEnumerable<PathPoint> GetC303PathPoints()
           => GeneratePathPoints(Maps.C303,
-           new List<(int, int)>()
-                 .Add(MoveAlongsideX(50, 1160, 625))   // Corridor
+           new List<(int, int)>());
+
+        private IEnumerable<PathPoint> GetC304PathPoints()
+          => GeneratePathPoints(Maps.C304, new List<(int, int)>()
+          .Add(MoveAlongsideX(50, 1160, 625))   // Corridor
                  .Add(MoveAlongsideY(625, 685, 75))    // 301
                  .Add(MoveAlongsideY(625, 685, 110))   // 302
                  .Add(MoveAlongsideY(625, 685, 185))   // 303
@@ -109,7 +112,7 @@ namespace DontGetLost.Data.Seed
                  .Add(MoveAlongsideY(625, 685, 1030))   // 317a
 
                  .Add(MoveAlongsideY(560, 625, 470))   // Elevator
-                 .Add(MoveAlongsideY(510, 625, 395))   // Stairs
+                 .Add(MoveAlongsideY(515, 625, 375))   // Stairs
                  .Add(MoveAlongsideY(625, 675, 1070))   // Stairs
 
                  .Add(MoveAlongsideY(505, 625, 1130))   // 318/318a
@@ -126,10 +129,7 @@ namespace DontGetLost.Data.Seed
                  .Add(MoveAlongsideY(505, 625, 185))   // 330
                  .Add(MoveAlongsideY(505, 625, 110))   // 331
                  .Add(MoveAlongsideY(505, 625, 80))   // 332
-                  );
-
-        private IEnumerable<PathPoint> GetC304PathPoints()
-          => GeneratePathPoints(Maps.C304, new List<(int, int)>());
+          );
 
         private IEnumerable<PathPoint> GetC400PathPoints()
           => GeneratePathPoints(Maps.C400,
@@ -216,7 +216,7 @@ namespace DontGetLost.Data.Seed
 
         private IEnumerable<PathPoint> GetC404PathPoints()
           => GeneratePathPoints(Maps.C404, new List<(int, int)>()
-              .Add(MoveAlongsideX(60, 1130, 620))   // Corridor
+              .Add(MoveAlongsideX(60, 1160, 620))   // Corridor
                  .Add(MoveAlongsideY(620, 740, 100))   // 331
                  .Add(MoveAlongsideY(620, 740, 240))   // 332
                  .Add(MoveAlongsideY(620, 740, 290))   // 333

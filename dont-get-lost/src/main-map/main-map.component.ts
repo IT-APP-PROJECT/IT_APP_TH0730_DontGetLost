@@ -124,9 +124,16 @@ export class MainMapComponent {
     }
 
     switchBuilding(): void {
-        this.ActiveBuilding = this.ActiveBuilding === this.InitialBuilding ? this.FinalBuilding : this.InitialBuilding;
-        this.InactiveBuildingName = this.ActiveBuilding === this.InitialBuilding ? this.FinalBuilding.Name : this.InitialBuilding.Name;
-        let floor = this.retriveFloor(this.NavigationFormFroup.controls['FinalRoomFormControl'].value);
+        let floor;
+        if (this.ActiveBuilding === this.InitialBuilding) {
+            this.ActiveBuilding = this.FinalBuilding;
+            this.InactiveBuildingName = this.InitialBuilding.Name;
+            floor = this.retriveFloor(this.NavigationFormFroup.controls['FinalRoomFormControl'].value);
+        } else {
+            this.ActiveBuilding = this.InitialBuilding;
+            this.InactiveBuildingName = this.FinalBuilding.Name
+            floor = this.retriveFloor(this.NavigationFormFroup.controls['InitialRoomFormControl'].value);
+        }
         this.toggleFloorLayer(floor);
     }
 
@@ -161,7 +168,7 @@ export class MainMapComponent {
     getMapRooms = async (mapId: string) => {
         let response = await axios({  method: "GET", url: `${this.API_BASE_URL}/rooms?mapName=${mapId}`});
         response.data.forEach((room: any) => {
-            this.CurrentMapRooms.push({MapId: room.mapName, Title: room.name, Description: room.description, X: room.coordinates.x, Y: room.coordinates.y, Link: ''});
+            this.CurrentMapRooms.push({MapId: room.mapName, Title: room.name, Description: room.description, X: room.coordinates.x, Y: room.coordinates.y, Link: room.url});
         });
         this.CurrentMapRooms.forEach((room: Room) => {
             this.addRoomIconToMap(room.X, room.Y, room.Title, room.Description, room.Link);
@@ -231,9 +238,9 @@ export class MainMapComponent {
     drawPath(points: Point[]): void {
         let convertedPoints = this.convertToLatLang(points);
         new L.Polyline(convertedPoints, {
-            color: 'red',
-            weight: 10,
-            opacity: 1,
+            color: 'orange',
+            weight: 8,
+            opacity: 0.9,
             smoothFactor: 1
         }).addTo(this.map);
     }
@@ -246,7 +253,7 @@ export class MainMapComponent {
         return latLang;
     }
 
-    findPath(mapId: string): void {
+    findPath(mapId: string) {
         let nearestExit;
         let initialRoom = this.CurrentMapRooms.find((room: Room) => room.Title === this.NavigationFormFroup.controls['InitialRoomFormControl'].value);
         if (initialRoom) {
@@ -267,15 +274,38 @@ export class MainMapComponent {
             });
             if (initialRoom) {
                 nearestExit = this.findNearestPoint({x: initialRoom.X, y: initialRoom.Y}, exitPoints, 1000);
-                console.log(nearestExit, this.CurrentMapIcons);
                 this.drawPath(this.pointToHall(nearestExit, mapId));
             } else if (finalRoom) {
-                console.log('dupa');
                 nearestExit = this.findNearestPoint({x: finalRoom.X, y: finalRoom.Y}, exitPoints, 1000);
                 this.drawPath(this.pointToHall(nearestExit, mapId))
             }
-        } else {
-
+        } 
+        if (this.InitialBuilding !== this.FinalBuilding) {
+            let exitPoints = [];
+            let exitsIcons = this.CurrentMapIcons.filter((icon: Icon) => icon.Type === IconType['Stairs']);
+            exitsIcons.forEach((icon: Icon) => {
+                let point = {x: icon.X, y: icon.Y};
+                exitPoints.push(point);
+            });
+            if (initialRoom) {
+                if (this.ActiveBuilding.Name === 'C3') {
+                    let maxX = Math.max.apply(Math, this.CurrentMap.PathPoints.map(function(o) { return o.x }));
+                    nearestExit = this.CurrentMap.PathPoints.find((point: Point) => point.x === maxX);
+                    this.PointsOnHall.push(nearestExit);
+                } else {
+                    nearestExit = this.findNearestPoint({x: initialRoom.X, y: initialRoom.Y}, exitPoints, 1000);
+                    this.drawPath(this.pointToHall(nearestExit, mapId));
+                }
+            } else if (finalRoom) {
+                if (this.ActiveBuilding.Name === 'C3') {
+                    let maxX = Math.max.apply(Math, this.CurrentMap.PathPoints.map(function(o) { return o.x }));
+                    nearestExit = this.CurrentMap.PathPoints.find((point: Point) => point.x === maxX);
+                    this.PointsOnHall.push(nearestExit);
+                } else {
+                    nearestExit = this.findNearestPoint({x: finalRoom.X, y: finalRoom.Y}, exitPoints, 1000);
+                    this.drawPath(this.pointToHall(nearestExit, mapId))
+                }
+            }
         }
         this.drawPath(this.PointsOnHall);
         this.PointsOnHall = [];
@@ -283,11 +313,10 @@ export class MainMapComponent {
 
     private pointToHall(point: Point, mapId: string): Point[] {
         let path = [];
-        let corridor = this.CorridorCoordinates.find((corridor: any) => corridor.mapId = mapId);
+        let corridor = this.CorridorCoordinates.get(mapId);
         path.push(point);
         path.push(this.findNearestPoint(point, this.CurrentMap.PathPoints, 100));
-        console.log(path);
-        while(path[path.length - 1].y !== corridor.y) {
+        while(path[path.length - 1].y !== corridor) {
             path.push(this.findNearestPointDistance(path[path.length - 1], path, 5));
         }
         this.PointsOnHall.push(path[path.length - 1]);
