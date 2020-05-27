@@ -83,7 +83,7 @@ let floors = [
 ]
 
 let C3 = {Name: 'C3', Floors: floors};
-let C4 = {Name: 'C4', Floor: floors};
+let C4 = {Name: 'C4', Floors: floors};
 
 export let buildings = [C3, C4];
 
@@ -94,3 +94,15 @@ export let IconTitles = [
     {Type: IconType[3], Title: 'Łazienka'},
     {Type: IconType[4], Title: 'Klatka schodowa'},
 ]
+
+export let corridorCoordinates =  new Map();
+corridorCoordinates.set('C3-00', 600);
+corridorCoordinates.set('C3-01', 0);
+corridorCoordinates.set('C3-02', 0);
+corridorCoordinates.set('C3-03', 0);
+corridorCoordinates.set('C3-04', 625);
+corridorCoordinates.set('C4-00', 625);
+corridorCoordinates.set('C4-01', 710);
+corridorCoordinates.set('C4-02', 630);
+corridorCoordinates.set('C4-03', 630);
+corridorCoordinates.set('C4-04', 630);

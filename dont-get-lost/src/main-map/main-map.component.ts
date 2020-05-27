@@ -5,7 +5,7 @@ import * as L from 'leaflet';
 import { Subject, Observable } from 'rxjs';
 import axios from "axios";
 
-import { MapData, buildings, IconTitles } from '../resources/mapData';
+import { MapData, buildings, IconTitles, corridorCoordinates } from '../resources/mapData';
 import { Map } from './../view-models/MapVM';
 import { Room } from './../view-models/RoomVM';
 import { Icon, IconType } from './../view-models/IconVM';
@@ -13,6 +13,7 @@ import { Floor } from './../view-models/FloorVM';
 import { Building } from './../view-models/BuildingVM';
 import { OverlayService } from './../services/overlay.service';
 import { OverlayComponentRef } from './../overlay/overlay-component-ref';
+import { Point } from 'src/view-models/PointVM';
 
 export enum ActiveMapType {
     Geo,
@@ -54,6 +55,8 @@ export class MainMapComponent {
     IconTitles = IconTitles;
     InactiveBuildingName: string;
     IsNavigationEnabled = false;
+    CorridorCoordinates = corridorCoordinates;
+    PointsOnHall: Point[];
 
     get IsNonGeoMapActive(): boolean {
         return this.ActiveMapType && this.ActiveMapType === ActiveMapType.NonGeo;
@@ -74,6 +77,7 @@ export class MainMapComponent {
         this.CurrentMap = {MapId: '', PathPoints: []};
         this.CurrentMapIcons = [];
         this.CurrentMapRooms = [];
+        this.PointsOnHall = [];
         this.setGeoMap();
     }
 
@@ -102,12 +106,14 @@ export class MainMapComponent {
     }
 
     toggleFloorLayer(floorNumber: string): void {
+        this.clearNavigationData();
         let mapId = `${this.ActiveBuilding.Name}-0${floorNumber}`;
         this.ActiveFloor = this.ActiveBuilding.Floors.find((floor: Floor) => floor.Number === floorNumber);
         this.setupLayerData(mapId);
     }
 
     toggleNavigation(): void {
+        this.clearNavigationData();
         let floorNumber = this.retriveFloor(this.NavigationFormFroup.controls['InitialRoomFormControl'].value);
         let mapId = `${this.InitialBuilding.Name}-0${floorNumber}`;
         this.ActiveBuilding =  this.InitialBuilding;
@@ -118,98 +124,79 @@ export class MainMapComponent {
     }
 
     switchBuilding(): void {
-        this.ActiveBuilding = this.ActiveBuilding === this.InitialBuilding ? this.FinalBuilding : this.InitialBuilding;
-        this.InactiveBuildingName = this.ActiveBuilding === this.InitialBuilding ? this.FinalBuilding.Name : this.InitialBuilding.Name;
-        let floor = this.retriveFloor(this.NavigationFormFroup.controls['FinalRoomFormControl'].value);
+        let floor;
+        if (this.ActiveBuilding === this.InitialBuilding) {
+            this.ActiveBuilding = this.FinalBuilding;
+            this.InactiveBuildingName = this.InitialBuilding.Name;
+            floor = this.retriveFloor(this.NavigationFormFroup.controls['FinalRoomFormControl'].value);
+        } else {
+            this.ActiveBuilding = this.InitialBuilding;
+            this.InactiveBuildingName = this.FinalBuilding.Name
+            floor = this.retriveFloor(this.NavigationFormFroup.controls['InitialRoomFormControl'].value);
+        }
         this.toggleFloorLayer(floor);
     }
 
-    setupLayerData(mapId: string): void {
+    async setupLayerData(mapId: string) {
         this.toggleOverlay();
-        let floorImagePromise = this.getFloorImageURL(mapId);
-        let nonGeoMapPromise = this.getNonGeoMap(mapId);
-        let mapPromise = this.getMapRooms(mapId)
-        let iconPromise = this.getMapIcons(mapId)
-        Promise.all([floorImagePromise, nonGeoMapPromise, mapPromise, iconPromise].map(p =>p.catch(e => e)))
-        .finally(() => {
-            // this.CurrentMapIcons.forEach((icon: Icon) => {
-            //     this.getCustomIconImage(icon.Type, icon.X, icon.Y).finally(() => {this.closeOverlay()});
-            // });
-            this.closeOverlay();
-        });
+        await this.getFloorImageURL(mapId);
+        await this.getNonGeoMap(mapId);
+        await this.getMapRooms(mapId);
+        await this.getMapIcons(mapId);
+        this.findPath(mapId);
+        this.closeOverlay();
     }
 
     getNonGeoMap = async (mapId: string) => {
-        axios({  method: "GET", url: `${this.API_BASE_URL}/pathPoints?mapName=${mapId}`})
-        .then( (response) => {
-            response.data.forEach((element: any) => {
-                this.CurrentMap.PathPoints.push({x: element.x, y: element.y})
-            });
-            this.CurrentMap.MapId =  mapId;
-            })
-        .catch(function (error) {
-            console.log(error);
+        let response = await axios({  method: "GET", url: `${this.API_BASE_URL}/pathPoints?mapName=${mapId}`});
+        response.data.forEach((element: any) => {
+            this.CurrentMap.PathPoints.push({x: element.x, y: element.y})
         });
+        this.CurrentMap.MapId =  mapId;
     }
 
     getMapIcons = async (mapId: string) => {
-        axios({  method: "GET", url: `${this.API_BASE_URL}/icons?mapName=${mapId}`})
-        .then( (response) => {
-            response.data.forEach((icon: any) => {
-                this.CurrentMapIcons.push({MapId: icon.mapName, Type: icon.type, X: icon.coordinates.x, Y: icon.coordinates.y});
+        let response = await axios({  method: "GET", url: `${this.API_BASE_URL}/icons?mapName=${mapId}`});
+        response.data.forEach((icon: any) => {
+            this.CurrentMapIcons.push({MapId: icon.mapName, Type: icon.type, X: icon.coordinates.x, Y: icon.coordinates.y});
+            this.CurrentMapIcons.forEach((icon: Icon) => {
+                this.getCustomIconImage(icon.Type, icon.X, icon.Y);
             });
-        })
-        .catch(function (error) {
-            console.log(error);
         });
     }
 
     getMapRooms = async (mapId: string) => {
-        axios({  method: "GET", url: `${this.API_BASE_URL}/rooms?mapName=${mapId}`})
-        .then( (response) => {
-            response.data.forEach((room: any) => {
-                this.CurrentMapRooms.push({MapId: room.mapName, Title: room.name, Description: room.description, X: room.coordinates.x, Y: room.coordinates.y, Link: ''});
-            });
-            this.CurrentMapRooms.forEach((room: Room) => {
-                this.addRoomIconToMap(room.X, room.Y, room.Title, room.Description, room.Link);
-            });
-        })
-        .catch(function (error) {
-            console.log(error);
+        let response = await axios({  method: "GET", url: `${this.API_BASE_URL}/rooms?mapName=${mapId}`});
+        response.data.forEach((room: any) => {
+            this.CurrentMapRooms.push({MapId: room.mapName, Title: room.name, Description: room.description, X: room.coordinates.x, Y: room.coordinates.y, Link: room.url});
+        });
+        this.CurrentMapRooms.forEach((room: Room) => {
+            this.addRoomIconToMap(room.X, room.Y, room.Title, room.Description, room.Link);
         });
     }
 
     getFloorImageURL = async (svgName: string) => {
-        axios({  method: "GET", url: `${this.API_BASE_URL}/images?name=${svgName}`})
-        .then( (response) => {
-            this.SVGLink = response.data.url;
-            this.setNonGeoMap(this.SVGLink);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+        let response = await axios({  method: "GET", url: `${this.API_BASE_URL}/images?name=${svgName}`});
+        this.SVGLink = response.data.url;
+        this.setNonGeoMap(this.SVGLink);
     }
 
     getCustomIconImage = async (iconType: IconType, x: number, y: number) => {
-        axios({  method: "GET", url: `${this.API_BASE_URL}/images?name=${iconType}`})
-        .then( (response) => {
-            let popupTitle = this.IconTitles.find((iconTitle: any) => iconTitle.Type === IconType[iconType]);
-            var coordinates = L.latLng([ y, x ]);
-            var customIcon = L.icon({
-                iconUrl: response.data.url,
-                shadowUrl: '',
-            
-                iconSize:     [30, 30], 
-                shadowSize:   [0, 0],
-                iconAnchor:   [15, 15], 
-                shadowAnchor: [0, 0], 
-                popupAnchor:  [0, -15]
-            });
-            L.marker(coordinates, {icon: customIcon}).addTo(this.map).bindPopup('<h3>' + popupTitle + '</h3>');
-        })
-        .catch(function (error) {
-            console.log(error);
+        let response = await axios({  method: "GET", url: `${this.API_BASE_URL}/images?name=${IconType[iconType]}`})
+        let popupTitle = this.IconTitles.find((iconTitle: any) => iconTitle.Type === IconType[iconType]).Title;
+        var coordinates = L.latLng([ y, x ]);
+        var customIcon = L.icon({
+            iconUrl: response.data.url,
+            className: "custom-icon",
+            shadowUrl: '',
+        
+            iconSize:     [30, 30], 
+            shadowSize:   [0, 0],
+            iconAnchor:   [15, 15], 
+            shadowAnchor: [0, 0], 
+            popupAnchor:  [0, -15]
         });
+        L.marker(coordinates, {icon: customIcon}).addTo(this.map).bindPopup('<h3>' + popupTitle + '</h3>');
     }
 
     clearInitialRoom():void {
@@ -232,6 +219,12 @@ export class MainMapComponent {
         this.OverlayRef.close();
     }
 
+    clearNavigationData(): void {
+        this.CurrentMap = {MapId: '', PathPoints: []};
+        this.CurrentMapIcons = [];
+        this.CurrentMapRooms = [];
+    }
+
     checkNavigationData(): void {
         if(this.InitialBuilding && this.FinalBuilding && 
            this.stringHasValue(this.NavigationFormFroup.controls['InitialRoomFormControl'].value) &&
@@ -240,6 +233,121 @@ export class MainMapComponent {
         } else {
             this.IsNavigationEnabled = false;
         }
+    }
+
+    drawPath(points: Point[]): void {
+        let convertedPoints = this.convertToLatLang(points);
+        new L.Polyline(convertedPoints, {
+            color: 'orange',
+            weight: 8,
+            opacity: 0.9,
+            smoothFactor: 1
+        }).addTo(this.map);
+    }
+
+    convertToLatLang(points: Point[]): any {
+        let latLang = [];
+        points.forEach((point: Point) => {
+            latLang.push(L.latLng([ point.y, point.x ]));
+        });
+        return latLang;
+    }
+
+    findPath(mapId: string) {
+        let nearestExit;
+        let initialRoom = this.CurrentMapRooms.find((room: Room) => room.Title === this.NavigationFormFroup.controls['InitialRoomFormControl'].value);
+        if (initialRoom) {
+            let initialRoomPoint = {x: initialRoom.X, y: initialRoom.Y};
+            this.drawPath(this.pointToHall(initialRoomPoint, mapId));
+        }
+        let finalRoom = this.CurrentMapRooms.find((room: Room) => room.Title === this.NavigationFormFroup.controls['FinalRoomFormControl'].value);
+        if (finalRoom) {
+            let finalRoomPoint = {x: finalRoom.X, y: finalRoom.Y};
+            this.drawPath(this.pointToHall(finalRoomPoint, mapId));
+        }
+        if (this.InitialBuilding === this.FinalBuilding && !this.isSameFloor()) {
+            let exitPoints = [];
+            let exitsIcons = this.CurrentMapIcons.filter((icon: Icon) => icon.Type === IconType['Stairs']);
+            exitsIcons.forEach((icon: Icon) => {
+                let point = {x: icon.X, y: icon.Y};
+                exitPoints.push(point);
+            });
+            if (initialRoom) {
+                nearestExit = this.findNearestPoint({x: initialRoom.X, y: initialRoom.Y}, exitPoints, 1000);
+                this.drawPath(this.pointToHall(nearestExit, mapId));
+            } else if (finalRoom) {
+                nearestExit = this.findNearestPoint({x: finalRoom.X, y: finalRoom.Y}, exitPoints, 1000);
+                this.drawPath(this.pointToHall(nearestExit, mapId))
+            }
+        } 
+        if (this.InitialBuilding !== this.FinalBuilding) {
+            let exitPoints = [];
+            let exitsIcons = this.CurrentMapIcons.filter((icon: Icon) => icon.Type === IconType['Stairs']);
+            exitsIcons.forEach((icon: Icon) => {
+                let point = {x: icon.X, y: icon.Y};
+                exitPoints.push(point);
+            });
+            if (initialRoom) {
+                if (this.ActiveBuilding.Name === 'C3') {
+                    let maxX = Math.max.apply(Math, this.CurrentMap.PathPoints.map(function(o) { return o.x }));
+                    nearestExit = this.CurrentMap.PathPoints.find((point: Point) => point.x === maxX);
+                    this.PointsOnHall.push(nearestExit);
+                } else {
+                    nearestExit = this.findNearestPoint({x: initialRoom.X, y: initialRoom.Y}, exitPoints, 1000);
+                    this.drawPath(this.pointToHall(nearestExit, mapId));
+                }
+            } else if (finalRoom) {
+                if (this.ActiveBuilding.Name === 'C3') {
+                    let maxX = Math.max.apply(Math, this.CurrentMap.PathPoints.map(function(o) { return o.x }));
+                    nearestExit = this.CurrentMap.PathPoints.find((point: Point) => point.x === maxX);
+                    this.PointsOnHall.push(nearestExit);
+                } else {
+                    nearestExit = this.findNearestPoint({x: finalRoom.X, y: finalRoom.Y}, exitPoints, 1000);
+                    this.drawPath(this.pointToHall(nearestExit, mapId))
+                }
+            }
+        }
+        this.drawPath(this.PointsOnHall);
+        this.PointsOnHall = [];
+    }
+
+    private pointToHall(point: Point, mapId: string): Point[] {
+        let path = [];
+        let corridor = this.CorridorCoordinates.get(mapId);
+        path.push(point);
+        path.push(this.findNearestPoint(point, this.CurrentMap.PathPoints, 100));
+        while(path[path.length - 1].y !== corridor) {
+            path.push(this.findNearestPointDistance(path[path.length - 1], path, 5));
+        }
+        this.PointsOnHall.push(path[path.length - 1]);
+        return path;
+    }
+
+    private findNearestPointDistance(initialPoint: Point, selectedPoints: Point[], distance: number): Point {
+        let nearestPoint;
+        let points = this.CurrentMap.PathPoints.filter((nextPoint: Point) => {
+            return Math.sqrt(Math.pow(Math.abs(initialPoint.x - nextPoint.x),2)  + Math.pow(Math.abs(initialPoint.y - nextPoint.y),2)) === distance;
+        });
+        points.some((point: Point) => {
+            if (point.x !== selectedPoints[selectedPoints.length - 2].x || point.y !== selectedPoints[selectedPoints.length - 2].y) {
+                nearestPoint = point;
+                return true;
+            }
+        });
+        return nearestPoint;
+    }
+
+    private findNearestPoint(initialPoint: Point, points: Point[], distance: number): Point {
+        let currentDistance;
+        let nearestPoint: Point;
+        points.forEach((nextPoint: Point) => {
+            currentDistance = Math.sqrt(Math.pow(Math.abs(initialPoint.x - nextPoint.x),2)  + Math.pow(Math.abs(initialPoint.y - nextPoint.y),2));
+            if (currentDistance < distance) {
+                distance = currentDistance;
+                nearestPoint = nextPoint;
+            }
+        });
+        return nearestPoint;
     }
 
     private setGeoMap(): void {
@@ -293,6 +401,11 @@ export class MainMapComponent {
     private addRoomIconToMap(x: number, y: number, popupTitle: string, popupBody: string, popupLink): void {
         var icon = L.latLng([ y, x ]);
         L.marker(icon).addTo(this.map).bindPopup(`<div class="popup-container"><h3>${popupTitle}</h3><p>${popupBody}</br><a href="${popupLink}" target="_blank">Wyszukiwarka prowadzących</a></p></div>`);
+    }
+
+    private isSameFloor(): boolean {
+        return this.retriveFloor(this.NavigationFormFroup.controls['InitialRoomFormControl'].value) ===
+            this.retriveFloor(this.NavigationFormFroup.controls['FinalRoomFormControl'].value) ? true : false;
     }
 
     private retriveFloor(room: string): string {

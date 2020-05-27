@@ -65,9 +65,12 @@ namespace DontGetLost.Data.Seed
           => GenerateRooms(Maps.C302, new List<(string, int, int, string, string)>());
 
         private IEnumerable<Room> GetC303Rooms()
-          => GenerateRooms(Maps.C303, new List<(string, int, int, string, string)>
-              {
-                ("301", 65, 690, "Add description", "" ),
+          => GenerateRooms(Maps.C303, new List<(string, int, int, string, string)>());
+
+        private IEnumerable<Room> GetC304Rooms()
+          => GenerateRooms(Maps.C304, new List<(string, int, int, string, string)>
+          {
+              ("301", 65, 690, "Add description", "" ),
                 ("302", 120, 690, "Add description", ""),
                 ("303", 178, 690, "Add description", ""),
                 ("304", 228, 690, "Add description", ""),
@@ -98,10 +101,7 @@ namespace DontGetLost.Data.Seed
                 ("330", 170, 525, "Add description", "https://prowadzacy.eka.pwr.edu.pl/plansali.php?pole=1015"),
                 ("331", 115, 525, "Add description", "https://prowadzacy.eka.pwr.edu.pl/plansali.php?pole=1006"),
                 ("332", 60, 525, "Add description", "")
-             });
-
-        private IEnumerable<Room> GetC304Rooms()
-          => GenerateRooms(Maps.C304, new List<(string, int, int, string, string)>());
+          });
 
         private IEnumerable<Room> GetC400Rooms()
           => GenerateRooms(Maps.C400, new List<(string, int, int, string, string)>     
