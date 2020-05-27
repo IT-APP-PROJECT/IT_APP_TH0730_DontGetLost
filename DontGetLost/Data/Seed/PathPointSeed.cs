@@ -87,16 +87,81 @@ namespace DontGetLost.Data.Seed
           => GeneratePathPoints(Maps.C302, new List<(int, int)>());
 
         private IEnumerable<PathPoint> GetC303PathPoints()
-          => GeneratePathPoints(Maps.C303, new List<(int, int)>());
+          => GeneratePathPoints(Maps.C303,
+           new List<(int, int)>()
+                 .Add(MoveAlongsideX(50, 1160, 625))   // Corridor
+                 .Add(MoveAlongsideY(625, 685, 75))    // 301
+                 .Add(MoveAlongsideY(625, 685, 110))   // 302
+                 .Add(MoveAlongsideY(625, 685, 185))   // 303
+                 .Add(MoveAlongsideY(625, 685, 220))   // 304
+                 .Add(MoveAlongsideY(625, 685, 290))   // 305
+                 .Add(MoveAlongsideY(625, 685, 325))   // 306
+                 .Add(MoveAlongsideY(625, 685, 425))   // 307
+                 .Add(MoveAlongsideY(625, 685, 505))   // 308
+                 .Add(MoveAlongsideY(625, 685, 625))   // 310
+                 .Add(MoveAlongsideY(625, 685, 640))  // 311
+                 .Add(MoveAlongsideY(625, 685, 715))   // 312
+                 .Add(MoveAlongsideY(625, 685, 745))   // 313
+                 .Add(MoveAlongsideY(625, 685, 820))  // 314
+                 .Add(MoveAlongsideY(625, 685, 850))   // 315
+                 .Add(MoveAlongsideY(625, 685, 920))   // 316
+                 .Add(MoveAlongsideY(625, 685, 955))   // 317
+                 .Add(MoveAlongsideY(625, 685, 1030))   // 317a
+
+                 .Add(MoveAlongsideY(560, 625, 470))   // Elevator
+                 .Add(MoveAlongsideY(510, 625, 395))   // Stairs
+                 .Add(MoveAlongsideY(625, 675, 1070))   // Stairs
+
+                 .Add(MoveAlongsideY(505, 625, 1130))   // 318/318a
+                 .Add(MoveAlongsideY(505, 625, 1030))   // 319
+                 .Add(MoveAlongsideY(505, 625, 925))   // 320
+                 .Add(MoveAlongsideY(505, 625, 825))   // 320a
+                 .Add(MoveAlongsideY(505, 625, 765))   // 321
+                 .Add(MoveAlongsideY(505, 625, 725))   // 322
+                 .Add(MoveAlongsideY(505, 625, 665))   // 323
+                 .Add(MoveAlongsideY(505, 625, 625))   // 324
+                 .Add(MoveAlongsideY(505, 625, 555))   // 325
+                 .Add(MoveAlongsideY(505, 625, 285))   // 328
+                 .Add(MoveAlongsideY(505, 625, 220))   // 329
+                 .Add(MoveAlongsideY(505, 625, 185))   // 330
+                 .Add(MoveAlongsideY(505, 625, 110))   // 331
+                 .Add(MoveAlongsideY(505, 625, 80))   // 332
+                  );
 
         private IEnumerable<PathPoint> GetC304PathPoints()
           => GeneratePathPoints(Maps.C304, new List<(int, int)>());
 
         private IEnumerable<PathPoint> GetC400PathPoints()
-          => GeneratePathPoints(Maps.C400, new List<(int, int)>());
+          => GeneratePathPoints(Maps.C400,
+           new List<(int, int)>()
+                 .Add(MoveAlongsideX(20, 1180, 625))   // Corridor
+                 .Add(MoveAlongsideY(625, 765, 210))    // 0.32
+                 .Add(MoveAlongsideY(625, 765, 390))   // 0.33
+                 .Add(MoveAlongsideY(625, 765, 445))   // 0.34
+                 .Add(MoveAlongsideY(625, 765, 810))   // 0.35
+                 .Add(MoveAlongsideY(625, 765, 945))   // 0.36
+
+                 .Add(MoveAlongsideY(465, 605, 945))   // 0.38
+                 .Add(MoveAlongsideY(465, 605, 765))   // 0.39
+                 .Add(MoveAlongsideY(465, 605, 445))   // 0.40
+                 .Add(MoveAlongsideY(465, 605, 390))   // 0.41
+                  );
 
         private IEnumerable<PathPoint> GetC401PathPoints()
-          => GeneratePathPoints(Maps.C401, new List<(int, int)>());
+          => GeneratePathPoints(Maps.C401,
+           new List<(int, int)>()
+                 .Add(MoveAlongsideX(140, 1100, 710))   // Corridor
+                 .Add(MoveAlongsideY(710, 820, 305))    // 31
+                 .Add(MoveAlongsideY(710, 820, 445))   // 32
+                 .Add(MoveAlongsideY(710, 820, 585))   // 33
+                 .Add(MoveAlongsideY(710, 820, 715))   // 34
+                 .Add(MoveAlongsideY(710, 820, 785))   // 35
+                 .Add(MoveAlongsideY(710, 820, 1030))   // 37
+
+                 .Add(MoveAlongsideY(575, 710, 825))   // 39
+                 .Add(MoveAlongsideY(575, 710, 765))   // 40
+                 .Add(MoveAlongsideY(575, 710, 195))   // 41/42
+                  );
 
         private IEnumerable<PathPoint> GetC402PathPoints()
           => GeneratePathPoints(Maps.C402, new List<(int, int)>()
