@@ -109,7 +109,7 @@ export class MainMapComponent {
         this.clearNavigationData();
         let mapId = `${this.ActiveBuilding.Name}-0${floorNumber}`;
         this.ActiveFloor = this.ActiveBuilding.Floors.find((floor: Floor) => floor.Number === floorNumber);
-        this.setupLayerData(mapId);
+        this.setupLayerData(mapId, true);
     }
 
     toggleNavigation(): void {
@@ -120,7 +120,7 @@ export class MainMapComponent {
         this.InactiveBuildingName = this.FinalBuilding.Name;
         this.ActiveFloor = this.ActiveBuilding.Floors.find((floor: Floor) => floor.Number === floorNumber);
         this.toggleMenu();
-        this.setupLayerData(mapId);
+        this.setupLayerData(mapId, true);
     }
 
     switchBuilding(): void {
@@ -137,13 +137,28 @@ export class MainMapComponent {
         this.toggleFloorLayer(floor);
     }
 
-    async setupLayerData(mapId: string) {
+    switchMapMode(): void {
+        this.clearNavigationData();
+        this.ActiveBuilding = this.AvailableBuildings[0];
+        this.InitialBuilding = this.ActiveBuilding;
+        this.FinalBuilding = this.AvailableBuildings[1];
+        this.InactiveBuildingName = this.FinalBuilding.Name;
+        if (this.ActiveMapType === ActiveMapType.Geo) {
+            this.setupLayerData('C3-00', false)
+        } else {
+            this.switchToGeoMap();
+        }
+    }
+
+    async setupLayerData(mapId: string, navigationMode: boolean) {
         this.toggleOverlay();
         await this.getFloorImageURL(mapId);
         await this.getNonGeoMap(mapId);
         await this.getMapRooms(mapId);
         await this.getMapIcons(mapId);
-        this.findPath(mapId);
+        if (navigationMode) {
+            this.findPath(mapId);
+        }
         this.closeOverlay();
     }
 
@@ -378,6 +393,17 @@ export class MainMapComponent {
         this.BuildingsLayerGroup.addLayer(layerBuildings);
     }
 
+    private switchToGeoMap(): void {
+        this.ActiveMapType = ActiveMapType.Geo;
+        this.clearMap();
+        this.map = L.map('map').setView([51.109070, 17.05953], 18);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(this.map);
+        this.BuildingsLayerGroup.addTo(this.map);
+    }
+
     private setNonGeoMap(imageURL: string): void {
         this.ActiveMapType = ActiveMapType.NonGeo;
 
@@ -410,7 +436,7 @@ export class MainMapComponent {
 
     private retriveFloor(room: string): string {
         var numberRegex = /^[0-9]*$/g
-        if (room[0] === '0') {
+        if (room[0] === '0' || room.length === 0) {
             return '0';
         } else {
             if (room.length > 2 && numberRegex.test(room[2])) {

@@ -50,7 +50,11 @@
   z-index: 999;
 }
 
-.toggle-menu-btn {
+.map-btn {
+  top: 70px;
+}
+
+.toggle-menu-btn, .toggle-map-btn {
   color: orange;
   cursor: pointer;
 }
@@ -113,7 +117,7 @@
 }
 
 .leaflet-container {
-  background: white !important;
+  background-color: white !important;
 }
 
 :host ::ng-deep{

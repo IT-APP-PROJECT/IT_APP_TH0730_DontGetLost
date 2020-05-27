@@ -105,4 +105,4 @@ corridorCoordinates.set('C4-00', 625);
 corridorCoordinates.set('C4-01', 710);
 corridorCoordinates.set('C4-02', 630);
 corridorCoordinates.set('C4-03', 630);
-corridorCoordinates.set('C4-04', 630);
+corridorCoordinates.set('C4-04', 620);
